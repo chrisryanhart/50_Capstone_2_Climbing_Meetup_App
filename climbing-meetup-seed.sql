@@ -1225,3 +1225,71 @@ VALUES ($$Auburn University Recreation and Wellness Center$$, 1, 'Gym'),
     ($$Pinedale Aquatic Center$$, 50, 'Gym'),
     ($$Source Bouldering Gym$$, 50, 'Gym'),
     ($$The Rock$$, 50, 'Gym');
+
+-- add 3 users, 3 meetups, 3 attendees
+-- CREATE TABLE users (
+--     id SERIAL PRIMARY KEY,
+--     username TEXT UNIQUE NOT NULL,
+--     password TEXT NOT NULL,
+--     name TEXT,
+--     profile_image TEXT,
+--     user_age INTEGER,
+--     user_gender TEXT,
+--     is_parent BOOLEAN,
+--     has_dogs BOOLEAN,
+--     bio TEXT,
+--     location_id INTEGER NOT NULL    
+--         REFERENCES locations ON DELETE SET NULL,
+--     preferences JSON
+-- );
+
+INSERT INTO users (username, 
+                    password, 
+                    name, 
+                    user_age, 
+                    user_gender, 
+                    is_parent,
+                    has_dogs, 
+                    bio, 
+                    location_id)
+VALUES ('testuser1','test','spider man',32,'Male',TRUE,FALSE,'Best climber ever',446),
+    ('testuser2','test','wonder woman',46,'Female',FALSE,TRUE,'Trad is rad',446),
+    ('testuser3','test','batman',25,'Male',TRUE,FALSE,'Professional urban climber',480);
+
+
+-- CREATE TABLE meetups (
+--     id SERIAL PRIMARY KEY,
+--     creator_user_id INTEGER NOT NULL
+--         REFERENCES users ON DELETE CASCADE,
+--     date DATE NOT NULL,
+--     time TIME NOT NULL,
+--     duration INTEGER NOT NULL,
+--     location_id INT NOT NULL
+--         REFERENCES locations ON DELETE SET NULL,
+--     description TEXT
+-- );
+
+INSERT INTO meetups (creator_user_id,
+                    date,
+                    time,
+                    duration,
+                    location_id,
+                    description)
+VALUES (1,'2023-01-05','10:00 AM',3,480,'Climb and have some beers'),
+(2,'2023-01-10','05:00 PM',4,446,'Meetup after work'),
+(3,'2023-01-05','08:00 PM',2,446,'Weekly climb session');
+
+
+-- CREATE TABLE meetups_attendees (
+--     meetup_id INTEGER
+--         REFERENCES meetups ON DELETE CASCADE,
+--     attendee_user_id INTEGER
+--         REFERENCES users ON DELETE CASCADE,
+--     PRIMARY KEY (meetup_id, attendee_user_id)
+-- );
+
+INSERT INTO meetups_attendees (meetup_id, attendee_user_id)
+VALUES (1,2),
+    (1,3),
+    (2,1),
+    (3,1);

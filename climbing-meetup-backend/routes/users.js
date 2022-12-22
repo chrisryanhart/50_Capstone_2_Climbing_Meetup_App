@@ -25,8 +25,10 @@ router.get('/:id', async function(req,res){
     return res.json(query.rows[0]);
 });
 
-// create a new user 
-router.post('/new', async function(req,res){
+// register a new user 
+router.post('/register', async function(req,res){
+    // need to hash pw before stored in db
+
     const { username, 
         password, 
         name, 
@@ -38,6 +40,9 @@ router.post('/new', async function(req,res){
         bio,
         location_id,
         preferences} = req.body;
+
+    //change bcrypt work factor to pull from config
+    const hashedPassword = await bcrypt.hash(password,12);   
 
     let result = await db.query(
         `INSERT INTO users (username,
@@ -54,7 +59,7 @@ router.post('/new', async function(req,res){
         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
         RETURNING id, username`,
         [username,
-            password,
+            hashedPassword,
             name,
             profile_image,
             user_age,

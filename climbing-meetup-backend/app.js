@@ -1,6 +1,7 @@
 const express = require('express');
 const users = require('./routes/users');
 const meetups = require('./routes/meetups');
+const authentication = require('./routes/authenication');
 
 const ExpressError = require('./expressError');
 
@@ -11,11 +12,14 @@ app.use(express.json());
 // parse form data
 app.use(express.urlencoded({extended: true}));
 
+// confirm user authentication before accessing any routes
+
 // use app.use instead of app.get, post, etc.
 // we can use an express router to call router.get, post, etc.
 
 app.use('/users', users);
 app.use('/meetups', meetups);
+app.use('/authentication', authentication);
 
 // 404 route not found error handler
 app.use(function (req, res, next) {

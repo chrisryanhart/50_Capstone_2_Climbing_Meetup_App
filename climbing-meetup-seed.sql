@@ -1288,7 +1288,7 @@ VALUES (1,'2023-01-05','10:00 AM',3,480,'Climb and have some beers'),
 --     PRIMARY KEY (meetup_id, attendee_user_id)
 -- );
 
-INSERT INTO meetups_attendees (meetup_id, attendee_user_id,join_request_approved)
+INSERT INTO meetups_attendees (meetup_id, attendee_user_id,join_request_status)
 VALUES (1,2,'pending'),
     (1,3,'approved'),
     (2,1,'approved'),

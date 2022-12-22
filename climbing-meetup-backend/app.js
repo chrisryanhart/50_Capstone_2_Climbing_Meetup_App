@@ -1,9 +1,11 @@
 const express = require('express');
+const morgan = require('morgan');
 const users = require('./routes/users');
 const meetups = require('./routes/meetups');
 const authentication = require('./routes/authenication');
 
 const ExpressError = require('./expressError');
+const {authenticateJWT} = require('./middleware/authorization');
 
 const app = express();
 
@@ -12,14 +14,17 @@ app.use(express.json());
 // parse form data
 app.use(express.urlencoded({extended: true}));
 
-// confirm user authentication before accessing any routes
+// allow user to register or login without token
+app.use('/authentication', authentication);
+// confirm user authentication before accessing protected routes
+app.use(authenticateJWT);
 
 // use app.use instead of app.get, post, etc.
 // we can use an express router to call router.get, post, etc.
 
 app.use('/users', users);
 app.use('/meetups', meetups);
-app.use('/authentication', authentication);
+
 
 // 404 route not found error handler
 app.use(function (req, res, next) {

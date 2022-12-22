@@ -26,51 +26,7 @@ router.get('/:id', async function(req,res){
 });
 
 // register a new user 
-router.post('/register', async function(req,res){
-    // need to hash pw before stored in db
 
-    const { username, 
-        password, 
-        name, 
-        profile_image, 
-        user_age, 
-        user_gender, 
-        is_parent,
-        has_dogs,
-        bio,
-        location_id,
-        preferences} = req.body;
-
-    //change bcrypt work factor to pull from config
-    const hashedPassword = await bcrypt.hash(password,12);   
-
-    let result = await db.query(
-        `INSERT INTO users (username,
-                            password,
-                            name,
-                            profile_image,
-                            user_age,
-                            user_gender,
-                            is_parent,
-                            has_dogs,
-                            bio,
-                            location_id,
-                            preferences)
-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
-        RETURNING id, username`,
-        [username,
-            hashedPassword,
-            name,
-            profile_image,
-            user_age,
-            user_gender,
-            is_parent,
-            has_dogs,
-            bio,
-            location_id,
-            preferences],);
-    return res.status(201).json(result.rows[0]);
-});
 
 // update user profile
 router.patch('/:id',async function (req,res,next){

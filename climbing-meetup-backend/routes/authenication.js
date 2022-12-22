@@ -7,7 +7,6 @@ const { SECRET_KEY, BCRYPT_WORK_FACTOR } = require('../config');
 
 const router = new express.Router();
 
-
 router.post('/register', async function(req,res){
 
     const { username, 

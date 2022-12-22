@@ -44,5 +44,6 @@ CREATE TABLE meetups_attendees (
         REFERENCES meetups ON DELETE CASCADE,
     attendee_user_id INTEGER
         REFERENCES users ON DELETE CASCADE,
-    PRIMARY KEY (meetup_id, attendee_user_id)
+    PRIMARY KEY (meetup_id, attendee_user_id),
+    join_request_approved TEXT
 );

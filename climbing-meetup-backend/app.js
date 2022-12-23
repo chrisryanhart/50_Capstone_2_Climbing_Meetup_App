@@ -2,9 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 const users = require('./routes/users');
 const meetups = require('./routes/meetups');
-const authentication = require('./routes/authenication');
+const authentication = require('./routes/authentication');
 
-const ExpressError = require('./expressError');
+const { ExpressError } = require('./expressError');
 const {authenticateJWT} = require('./middleware/authorization');
 
 const app = express();

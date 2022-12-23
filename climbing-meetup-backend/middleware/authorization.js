@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 
 
 // authenticate JWT
+// include the user_id in the token
 function authenticateJWT(req,res,next){
     try {
         const submittedToken = req.headers.authorization;
@@ -23,6 +24,8 @@ function ensureLoggedIn(req,res,next){
     if(!req.user){
         const err = new ExpressError("Unauthorized",401);
         return next(err);
+    }else{
+        return next();
     }
 }
 

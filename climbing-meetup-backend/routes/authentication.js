@@ -2,7 +2,8 @@ const express = require('express');
 const db = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { route } = require('../app');
+const { ExpressError } = require('../expressError');
+// const { route } = require('../app');
 const { SECRET_KEY, BCRYPT_WORK_FACTOR } = require('../config');
 
 const router = new express.Router();
@@ -57,16 +58,18 @@ router.post('/login', async function(req,res,next){
     const { username, password } = req.body;
 
     const result = await db.query(
-        `SELECT username, password
+        `SELECT id, username, password
         FROM users
         WHERE username=$1`,
         [username]);
     
     const user = result.rows[0];
+    
+    const id = user.id;
 
     if(user){
         if(await bcrypt.compare(password,user.password)===true){
-            let token = jwt.sign({username},SECRET_KEY);
+            let token = jwt.sign({id,username},SECRET_KEY);
             return res.json({token});
         }
     }

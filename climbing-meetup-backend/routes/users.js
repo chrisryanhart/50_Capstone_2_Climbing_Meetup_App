@@ -2,12 +2,14 @@ const express = require('express');
 const db = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const {ensureLoggedIn} = require('../middleware/authorization');
+const { ExpressError } = require('../expressError');
 
 const router = new express.Router();
 
 // return list of all users
 // may need to filter by criteria
-router.get('/', async function(req,res){
+router.get('/',ensureLoggedIn, async function(req,res){
     // use await db.query('SQL syntax')
     let query = await db.query(
         `SELECT * FROM users`);
@@ -15,7 +17,8 @@ router.get('/', async function(req,res){
 });
 
 // get current user detail
-router.get('/:id', async function(req,res){
+// can combine queries to get meetups a certain user is attending
+router.get('/:id',ensureLoggedIn, async function(req,res){
     // use await db.query('SQL syntax')
     let user_id=req.params.id;
     let query = await db.query(
@@ -25,11 +28,18 @@ router.get('/:id', async function(req,res){
     return res.json(query.rows[0]);
 });
 
-// register a new user 
 
 
 // update user profile
-router.patch('/:id',async function (req,res,next){
+// ensure current user matches
+router.patch('/:id',ensureLoggedIn,async function (req,res,next){
+    let user_id=Number(req.params.id);
+
+    // confirm current user is the one changing the profile
+    if(user_id !== req.user.id){
+        throw new ExpressError("Unauthorized",401);
+    } 
+
     const { username, 
         password, 
         name, 
@@ -41,7 +51,8 @@ router.patch('/:id',async function (req,res,next){
         bio,
         location_id,
         preferences} = req.body;
-        
+    
+    // confirm text is not an issue for query
     const id = req.params.id;
 
     const result = await db.query(

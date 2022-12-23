@@ -2,14 +2,16 @@ const express = require('express');
 const db = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { route } = require('../app');
+// const { route } = require('../app');
+const {ensureLoggedIn} = require('../middleware/authorization');
+const { ExpressError } = require('../expressError');
 
 const router = new express.Router();
 
 // enable filtering for specific date/time?
 // better to do filtering on the front-end?
 // view all meetups
-router.get('/', async function(req,res){
+router.get('/',ensureLoggedIn, async function(req,res){
     let query = await db.query(
         `SELECT *
         FROM meetups`);
@@ -19,7 +21,8 @@ router.get('/', async function(req,res){
 
 
 // view a specific meetup 
-router.get('/:id', async function(req,res){
+// can combine sql query to add additional info, like attendees
+router.get('/:id',ensureLoggedIn, async function(req,res){
     let id = req.params.id;
 
     let query = await db.query(
@@ -33,7 +36,7 @@ router.get('/:id', async function(req,res){
 
 // create new meetup 
 // adding a meetup also has to add a new instance to the meetups_attendees
-router.post('/new', async function(req,res){
+router.post('/new',ensureLoggedIn, async function(req,res){
     const { creator_user_id,
         date,
         time,
@@ -61,7 +64,9 @@ router.post('/new', async function(req,res){
 });
 
 // edit existing meetup
-router.patch('/:id', async function(req,res){
+// ensure user editing the meetup was the creator
+// throw a resource not found error
+router.patch('/:id',ensureLoggedIn, async function(req,res){
     const {date,time,duration,location_id,description} = req.body;
 
     const id = req.params.id;
@@ -75,12 +80,19 @@ router.patch('/:id', async function(req,res){
         WHERE id=$6
         RETURNING id`,
         [date,time,duration,location_id,description,id]);
+
+        // rowsCount === 0 if no match found
+        // error can say no meetup found
+        // or action could not be completed
+        // throw error if no rows found
     
     return res.json(result.rows[0]);
 });
 
 // delete meetup
-router.delete('/:id', async function(req,res,next){
+// ensure logged in user created the meetup they're deleting 
+// no rows returned if a match not made
+router.delete('/:id',ensureLoggedIn, async function(req,res,next){
 
     const id = req.params.id;
 
@@ -94,7 +106,7 @@ router.delete('/:id', async function(req,res,next){
 // request to attend meetup 
 // user should also see any requests on their profile
 // making a request adds a new row to the meetups_attendees table, but not sooner
-router.post('/:id/join',async function(req,res,next){
+router.post('/:id/join',ensureLoggedIn,async function(req,res,next){
     let meetup_id = req.params.id;
     let attendee_user_id = 3;
     let join_request_status = 'pending';
@@ -111,7 +123,9 @@ router.post('/:id/join',async function(req,res,next){
 });
 
 // allow users to leave a meetup
-router.delete('/:id/leave', async function(req,res,next){
+// confirm current user has an active meetup request 
+// could also use try/catch error handling; if no match found
+router.delete('/:id/leave',ensureLoggedIn, async function(req,res,next){
     let meetup_id = req.params.id;
 
     const result = await db.query(
@@ -125,7 +139,12 @@ router.delete('/:id/leave', async function(req,res,next){
 // accept request to join meeting 
 // verify if the user requesting is the same as the creator_id
 // update database with creator_user decision
-router.patch('/:id/attendees', async function(req,res){
+// confirm user accepting was the creator 
+    // can add this to the where statement in the query
+    // try and catch the error
+    // otherwise, can send the users meetup_ids in the request
+// or two queries required
+router.patch('/:id/attendees',ensureLoggedIn, async function(req,res){
     let meetup_id = req.params.id;
 
     const {join_request_status,attendee_user_id} = req.body;

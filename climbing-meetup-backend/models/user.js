@@ -1,8 +1,68 @@
 // create models to make sql queries
 const db = require('../db.js');
+const bcrypt = require('bcrypt');
+const { SECRET_KEY, BCRYPT_WORK_FACTOR } = require('../config');
 
 
 class User{
+    static async authenticate(username,password){
+        const result = await db.query(
+            `SELECT id, username, password
+            FROM users
+            WHERE username=$1`,
+            [username]);
+
+        const user = result.rows[0];
+        
+        if(user){
+                if(await bcrypt.compare(password,user.password)===true){
+                    return user;
+                }
+            }
+    }
+    static async register(details){
+
+        const { username, 
+            password,
+            name, 
+            profile_image, 
+            user_age, 
+            user_gender, 
+            is_parent,
+            has_dogs,
+            bio,
+            location_id,
+            preferences} = details;
+
+        const hashedPassword = await bcrypt.hash(password,BCRYPT_WORK_FACTOR);  
+
+        const result = await db.query(
+            `INSERT INTO users (username,
+                                password,
+                                name,
+                                profile_image,
+                                user_age,
+                                user_gender,
+                                is_parent,
+                                has_dogs,
+                                bio,
+                                location_id,
+                                preferences)
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+            RETURNING id, username`,
+            [username,
+                hashedPassword,
+                name,
+                profile_image,
+                user_age,
+                user_gender,
+                is_parent,
+                has_dogs,
+                bio,
+                location_id,
+                preferences],);
+        return result.rows[0];
+    }
 
     static async getAll(){
         const query = await db.query(

@@ -2,6 +2,7 @@
 const db = require('../db.js');
 const bcrypt = require('bcrypt');
 const { SECRET_KEY, BCRYPT_WORK_FACTOR } = require('../config');
+const {ExpressError,NotFoundError,UnauthorizedError,BadRequestError,ForbiddenError,} = require('../expressError');
 
 
 class User{
@@ -18,6 +19,8 @@ class User{
                 if(await bcrypt.compare(password,user.password)===true){
                     return user;
                 }
+            }else{
+                throw new BadRequestError('Username and/or password is incorrect.');
             }
     }
     static async register(details){
@@ -61,6 +64,10 @@ class User{
                 bio,
                 location_id,
                 preferences],);
+
+        // this should be caught by data validation 
+        if(result.rowCount === 0) throw new BadRequestError('Invalid input. User could not be created.');
+
         return result.rows[0];
     }
 
@@ -76,6 +83,8 @@ class User{
             `SELECT *
              FROM users
              WHERE id=$1`,[id]);
+
+        if(result.rowCount === 0) throw new BadRequestError('Invalid input. No such user exists.');
 
         return query.rows[0];
     }
@@ -119,6 +128,10 @@ class User{
                 location_id,
                 preferences,
                 id]);
+
+        // this should never execute due to the initial if state in the route function
+        if(result.rowCount === 0) throw new BadRequestError('Invalid input. No such user exists.');
+
         return result.rows[0];
 
     }
@@ -126,7 +139,5 @@ class User{
 
 
 }
-
-
 
 module.exports = { User };

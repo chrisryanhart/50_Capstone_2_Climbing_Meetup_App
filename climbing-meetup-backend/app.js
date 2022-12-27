@@ -19,8 +19,6 @@ app.use('/authentication', authentication);
 // confirm user authentication before accessing protected routes
 app.use(authenticateJWT);
 
-// use app.use instead of app.get, post, etc.
-// we can use an express router to call router.get, post, etc.
 
 app.use('/users', users);
 app.use('/meetups', meetups);

@@ -23,7 +23,7 @@ router.get('/',ensureLoggedIn, async function(req,res,next){
 
 
 // view a specific meetup 
-// can combine sql query to add additional info, like attendees
+// consider combining sql query to add additional info, like attendees
 router.get('/:id',ensureLoggedIn, async function(req,res,next){
     try{
         let id = req.params.id;
@@ -37,28 +37,27 @@ router.get('/:id',ensureLoggedIn, async function(req,res,next){
 });
 
 // create new meetup 
-// adding a meetup also has to add a new instance to the meetups_attendees
 router.post('/new',ensureLoggedIn, async function(req,res,next){
     try{
+        const creator_user_id = req.user.id;
         // confirm data validation with json schema
-        const result = await Meetup.createMeetup(req.body);
+        const result = await Meetup.createMeetup(creator_user_id,req.body);
 
         return res.status(201).json(result);
     }catch(err){
         return next(err);
     }
-
 });
 
 // edit existing meetup
-// ensure user editing the meetup was the creator
-// throw a resource not found error
+// ensures user editing the meetup was the creator
 router.patch('/:id',ensureLoggedIn, async function(req,res,next){
     try{
         // have to confirm that the meetup creator is the current user
         const id = req.params.id;
+        const creator_user_id = req.user.id;
 
-        const result = await Meetup.updateMeetup(id,req.body);
+        const result = await Meetup.updateMeetup(id,creator_user_id,req.body);
         
         return res.json(result);
     }catch(err){
@@ -67,13 +66,13 @@ router.patch('/:id',ensureLoggedIn, async function(req,res,next){
 });
 
 // delete meetup
-// ensure logged in user created the meetup they're deleting 
-// no rows returned if a match not made
+// ensures logged in user created the meetup they're deleting 
 router.delete('/:id',ensureLoggedIn, async function(req,res,next){
     try{
         const id = req.params.id;
+        const attendee_user_id = req.user.id;
 
-        await Meetup.deleteMeetup(id);
+        await Meetup.deleteMeetup(id,attendee_user_id);
         // if(result) return res.json;
     
         return res.json({message: "Meetup deleted"});
@@ -92,7 +91,7 @@ router.post('/:id/join',ensureLoggedIn,async function(req,res,next){
         // currently get foreign key constraint error when meeting not present
         let meetup_id = req.params.id;
         // take from req.user
-        let attendee_user_id = 2;
+        let attendee_user_id = req.user.id;
     
         const result = await Meetup.joinMeetup(meetup_id,attendee_user_id);
     
@@ -108,7 +107,7 @@ router.post('/:id/join',ensureLoggedIn,async function(req,res,next){
 router.delete('/:id/leave',ensureLoggedIn, async function(req,res,next){
     try{
         let meetup_id = req.params.id;
-        let user_id = 3;
+        let user_id = req.user.id;
     
         await Meetup.leaveMeetup(meetup_id,user_id);
     
@@ -129,10 +128,11 @@ router.delete('/:id/leave',ensureLoggedIn, async function(req,res,next){
 router.patch('/:id/manage',ensureLoggedIn, async function(req,res,next){
     try{
         let meetup_id = req.params.id;
+        const curr_user_id = user.id;
 
         const {join_request_status,attendee_user_id} = req.body;
     
-        const result = await Meetup.handleAttendee(meetup_id, join_request_status, attendee_user_id);
+        const result = await Meetup.handleAttendee(meetup_id, curr_user_id, join_request_status, attendee_user_id);
     
         return res.json(result);
     }catch(err){

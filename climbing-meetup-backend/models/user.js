@@ -20,7 +20,7 @@ class User{
                     return user;
                 }
             }else{
-                throw new BadRequestError('Username and/or password is incorrect.');
+                throw new UnauthorizedError('Username and/or password is incorrect.');
             }
     }
     static async register(details){
@@ -73,14 +73,37 @@ class User{
 
     static async getAll(){
         const query = await db.query(
-            `SELECT * FROM users`);
+            `SELECT id,
+                username,
+                password,
+                name ,
+                profile_image,
+                user_age,
+                user_gender,
+                is_parent,
+                has_dogs,
+                bio,
+                location_id,    
+                preferences 
+            FROM users`);
         
         return query.rows;
     }
 
     static async getUser(id){
         const query = await db.query(
-            `SELECT *
+            `SELECT id,
+                username,
+                password,
+                name ,
+                profile_image,
+                user_age,
+                user_gender,
+                is_parent,
+                has_dogs,
+                bio,
+                location_id,    
+                preferences 
              FROM users
              WHERE id=$1`,[id]);
 

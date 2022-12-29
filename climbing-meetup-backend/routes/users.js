@@ -31,6 +31,20 @@ router.get('/:id',ensureLoggedIn, async function(req,res,next){
     }
 });
 
+// get user meetups whether they're organizing or attending only
+router.get('/:id/meetups',ensureLoggedIn,async function(req,res,next){
+    try{
+        let user_id=req.params.id;
+
+        const result = await User.getUserMeetups(user_id);
+
+        return res.json(result);
+    }catch(err){
+
+        return next(err);
+    }
+});
+
 
 // update user profile
 // ensure current user matches

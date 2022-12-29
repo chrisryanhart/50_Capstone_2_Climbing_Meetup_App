@@ -2,34 +2,127 @@ const db = require('../db.js');
 const {ExpressError,NotFoundError,UnauthorizedError,BadRequestError,ForbiddenError,} = require('../expressError');
 
 class Meetup{
-    static async getAll(){
-        const query = await db.query(
-            `SELECT creator_user_id,
-                date,
-                time,
-                duration,
-                location_id,
-                description
-            FROM meetups`);
+    static async getAll(location_id){
+        // filter by locations
+        const query = await db.query(`
+            SELECT m.id, 
+                creator_user.name AS creator_name, 
+                m.date, 
+                m.time, 
+                m.duration, 
+                l.name AS location_name, 
+                m.description, 
+                attendee_user.name AS attendee_name,
+                ma.join_request_status            
+            FROM meetups m
+            JOIN users creator_user
+             ON creator_user.id = m.creator_user_id
+            JOIN locations l
+             ON l.id=m.location_id
+            LEFT JOIN meetups_attendees ma
+             ON ma.meetup_id=m.id
+            LEFT JOIN users attendee_user
+             ON attendee_user.id = ma.attendee_user_id
+            WHERE l.id=$1`,
+            [location_id]);
         
-        return query.rows;
+            let meetupIds = new Set();
+
+            const resultArr = [];
+    
+            for(const meetup of query.rows){
+                // if id is in set, it's at least the second instance of a meeting
+                if(meetupIds.has(meetup.id)){
+                    for(const result of resultArr){
+                        if(result.id === meetup.id){
+                            if(meetup.attendee_name !== null){
+                                let newAttendee = {'name': meetup.attendee_name,'status':meetup.join_request_status}
+                                result.attendees.push(newAttendee);
+                            }
+                        }
+                    }
+                }else{
+                    meetupIds.add(meetup.id);
+                        let newMeetup = {id:meetup.id, 
+                            creator_name:meetup.creator_name, 
+                            date:meetup.date, 
+                            time:meetup.time, 
+                            duration: meetup.duration,
+                            location_name: meetup.location_name,
+                            description: meetup.description,
+                            attendees:[]}
+    
+                        if(meetup.attendee_name !== null){
+                            newMeetup.attendees.push({'name':meetup.attendee_name,'status':meetup.join_request_status})
+                        }
+    
+                        resultArr.push(newMeetup);
+                    }
+                }
+                return resultArr;
+
     }
 
+    // get all attendees and creators
     static async getMeetup(id){
-        const query = await db.query(
-            `SELECT creator_user_id,
-                date,
-                time,
-                duration,
-                location_id,
-                description
-            FROM meetups
-            WHERE id=$1`,
-            [id]);
+        const query = await db.query(`
+        SELECT m.id, 
+            creator_user.name AS creator_name, 
+            m.date, 
+            m.time, 
+            m.duration, 
+            l.name AS location_name, 
+            m.description, 
+            attendee_user.name AS attendee_name,
+            ma.join_request_status
+        FROM meetups m
+        JOIN users creator_user
+         ON creator_user.id = m.creator_user_id
+        JOIN locations l
+         ON l.id=m.location_id
+        LEFT JOIN meetups_attendees ma
+         ON ma.meetup_id=m.id
+        LEFT JOIN users attendee_user
+         ON attendee_user.id = ma.attendee_user_id
+        WHERE m.id=$1`,[id]);
         
-        if(result.rowCount === 0) throw new NotFoundError('No such meetup exists.');
+        if(query.rowCount === 0) throw new NotFoundError('No such meetup exists.');
 
-        return query.rows[0];
+        let meetupIds = new Set();
+
+        const resultArr = [];
+
+        for(const meetup of query.rows){
+            // if id is in set, it's at least the second instance of a meeting
+            if(meetupIds.has(meetup.id)){
+                for(const result of resultArr){
+                    if(result.id === meetup.id){
+                        if(meetup.attendee_name !== null){
+                            let newAttendee = {'name': meetup.attendee_name,'status':meetup.join_request_status}
+                            result.attendees.push(newAttendee);
+                        }
+                    }
+                }
+            }else{
+                meetupIds.add(meetup.id);
+                    let newMeetup = {id:meetup.id, 
+                        creator_name:meetup.creator_name, 
+                        date:meetup.date, 
+                        time:meetup.time, 
+                        duration: meetup.duration,
+                        location_name: meetup.location_name,
+                        description: meetup.description,
+                        attendees:[]}
+
+                    if(meetup.attendee_name !== null){
+                        newMeetup.attendees.push({'name':meetup.attendee_name,'status':meetup.join_request_status})
+                    }
+
+                    resultArr.push(newMeetup);
+                }
+            }
+            return resultArr;
+
     }
 
     static async createMeetup(creator_user_id,details){

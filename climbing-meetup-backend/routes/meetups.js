@@ -9,19 +9,22 @@ const { ExpressError } = require('../expressError');
 
 const router = new express.Router();
 
-// enable filtering for specific date/time?
-// better to do filtering on the front-end?
+// enable filtering
 // view all meetups
 router.get('/',ensureLoggedIn, async function(req,res,next){
     try{
-        const result = await Meetup.getAll();
+        // filter by location
+        // collect location from form data
+        const location_id = req.body.location_id;
+
+        const result = await Meetup.getAll(location_id);
         return res.json(result);
     }catch(err){
         return next(err);
     }
 });
 
-
+// get details of all attendees
 // view a specific meetup 
 // consider combining sql query to add additional info, like attendees
 router.get('/:id',ensureLoggedIn, async function(req,res,next){

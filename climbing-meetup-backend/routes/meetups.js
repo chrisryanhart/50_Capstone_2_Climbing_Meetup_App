@@ -5,7 +5,9 @@ const jwt = require('jsonwebtoken');
 const Meetup = require('../models/meetup');
 // const { route } = require('../app');
 const {ensureLoggedIn} = require('../middleware/authorization');
-const { ExpressError } = require('../expressError');
+const { ExpressError, BadRequestError } = require('../expressError');
+const jsonschema = require('jsonschema');
+const meetupFormSchema = require('../schemas/meetupFormSchema.json');
 
 const router = new express.Router();
 
@@ -42,6 +44,14 @@ router.get('/:id',ensureLoggedIn, async function(req,res,next){
 // create new meetup 
 router.post('/new',ensureLoggedIn, async function(req,res,next){
     try{
+        const verifiedMeetupData = jsonschema.validate(req.body,meetupFormSchema);
+
+        if(!verifiedMeetupData.valid){
+            let listOfErrors = verifiedMeetupData.errors.map(err => err.stack);
+            let newError = new BadRequestError(listOfErrors);
+            return next(newError);
+        }
+
         const creator_user_id = req.user.id;
         // confirm data validation with json schema
         const result = await Meetup.createMeetup(creator_user_id,req.body);

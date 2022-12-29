@@ -16,12 +16,13 @@ class User{
         const user = result.rows[0];
         
         if(user){
-                if(await bcrypt.compare(password,user.password)===true){
+            if(await bcrypt.compare(password,user.password)===true){
                     return user;
-                }
-            }else{
-                throw new UnauthorizedError('Username and/or password is incorrect.');
             }
+        }
+        
+        throw new UnauthorizedError('Username and/or password is incorrect.');
+    
     }
     static async register(details){
 

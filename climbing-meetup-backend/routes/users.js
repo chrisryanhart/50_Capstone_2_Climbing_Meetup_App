@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const {ensureLoggedIn} = require('../middleware/authorization');
 const {ExpressError,NotFoundError,UnauthorizedError,BadRequestError,ForbiddenError,} = require('../expressError');
 const { User } = require('../models/user.js');
+const jsonschema = require('jsonschema');
+const editProfileFormSchema = require('../schemas/editProfileFormSchema.json');
 
 const router = new express.Router();
 
@@ -50,6 +52,14 @@ router.get('/:id/meetups',ensureLoggedIn,async function(req,res,next){
 // ensure current user matches
 router.patch('/:id',ensureLoggedIn,async function (req,res,next){
     try{
+        const verifiedEditProfileData = jsonschema.validate(req.body,editProfileFormSchema);
+
+        if(!verifiedEditProfileData.valid){
+            let listOfErrors = verifiedEditProfileData.errors.map(err => err.stack);
+            let newError = new BadRequestError(listOfErrors);
+            return next(newError);
+        }
+
         let user_id=Number(req.params.id);
         // confirm current user is the one changing the profile
         if(user_id !== req.user.id){

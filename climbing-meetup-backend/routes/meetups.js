@@ -8,6 +8,7 @@ const {ensureLoggedIn} = require('../middleware/authorization');
 const { ExpressError, BadRequestError } = require('../expressError');
 const jsonschema = require('jsonschema');
 const meetupFormSchema = require('../schemas/meetupFormSchema.json');
+const editMeetupFormSchema = require('../schemas/editMeetupFormSchema.json');
 
 const router = new express.Router();
 
@@ -66,6 +67,13 @@ router.post('/new',ensureLoggedIn, async function(req,res,next){
 // ensures user editing the meetup was the creator
 router.patch('/:id',ensureLoggedIn, async function(req,res,next){
     try{
+        const verifiedEditMeetupData = jsonschema.validate(req.body,editMeetupFormSchema);
+
+        if(!verifiedEditMeetupData.valid){
+            let listOfErrors = verifiedEditMeetupData.errors.map(err => err.stack);
+            let newError = new BadRequestError(listOfErrors);
+            return next(newError);
+        }
         // have to confirm that the meetup creator is the current user
         const id = req.params.id;
         const creator_user_id = req.user.id;

@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function LoginFormCard() {
+export default function MeetupFormCard() {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
@@ -31,19 +31,36 @@ export default function LoginFormCard() {
     <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" component="h2">
-          Login to your account:
+          New Meetup Form
         </Typography>
 
         <Typography variant="body2" component="div">
             <form>
                 <div>
-                    <label>Username: </label>
+                    <label>Creator User id: </label>
                     <input/>
                 </div>
                 <div>
-                    <label>Password: </label>
-                    <input/>
+                    <label>Date: </label>
+                    <input/>  
                 </div>
+                <div>
+                    <label>Time: </label>
+                    <input/>  
+                </div>
+                <div>
+                    <label>Duration: </label>
+                    <input/>  
+                </div>
+                <div>
+                    <label>Location: </label>
+                    <input/>  
+                </div>
+                <div>
+                    <label>Description: </label>
+                    <textarea></textarea>  
+                </div>
+                <button>Submit</button>
             </form>
         </Typography>
       </CardContent>

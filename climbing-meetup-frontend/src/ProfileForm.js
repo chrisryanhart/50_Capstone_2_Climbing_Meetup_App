@@ -4,7 +4,7 @@ function ProfileForm(){
 
     return (
         <form>
-            <label>Test: </label>
+            <label>ProfileForm: </label>
             <input/>
         </form>
     );

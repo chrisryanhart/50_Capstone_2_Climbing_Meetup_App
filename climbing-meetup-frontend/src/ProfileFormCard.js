@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function LoginFormCard() {
+export default function SimpleCard() {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
@@ -31,7 +31,7 @@ export default function LoginFormCard() {
     <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" component="h2">
-          Login to your account:
+          Complete New Profile Form:
         </Typography>
 
         <Typography variant="body2" component="div">
@@ -42,8 +42,37 @@ export default function LoginFormCard() {
                 </div>
                 <div>
                     <label>Password: </label>
-                    <input/>
+                    <input/>  
                 </div>
+                <div>
+                    <label>Name: </label>
+                    <input/>  
+                </div>
+                <div>
+                    <label>Profile Image: </label>
+                    <input/>  
+                </div>
+                <div>
+                    <label>Age: </label>
+                    <input/>  
+                </div>
+                <div>
+                    <label>Parent: </label>
+                    <input/>  
+                </div>
+                <div>
+                    <label>Climbing Type(s): </label>
+                    <input/>  
+                </div>
+                <div>
+                    <label>Location: </label>
+                    <input type="number"/>  
+                </div>
+                <div>
+                    <label>Bio: </label>
+                    <textarea></textarea>  
+                </div>
+                <button>Submit</button>
             </form>
         </Typography>
       </CardContent>

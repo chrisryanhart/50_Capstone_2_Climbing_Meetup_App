@@ -1,0 +1,20 @@
+img {
+    width: 300px;
+    height: 500px; 
+    /* padding-top: ; */
+}
+
+body {
+    background-color: beige;
+}
+
+label {
+    width: 125px;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.home{
+    display: flex;
+    width: 50vw;
+}

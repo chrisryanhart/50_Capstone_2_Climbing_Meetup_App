@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter } from "react-router-dom";
-import Routes from './Routes';
+// import Routes from './Routes';
 import NavBar from './NavBar';
 import './App.css';
-import Container from './Container';
+import NewContainer from './Container';
 
 function App() {
 
@@ -12,7 +12,7 @@ function App() {
       <BrowserRouter>
         {/* <ResponsiveAppBar/> */}
         <NavBar/>
-        <Container/>
+        <NewContainer/>
         {/* <Routes/> */}
       </BrowserRouter>
     </div>

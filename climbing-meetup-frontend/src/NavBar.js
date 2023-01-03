@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -33,16 +33,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Example(props) {
+function NavBar(props) {
   const classes = useStyles();;
 
-  const [auth, setAuth] = React.useState(true);
+  // const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -60,9 +57,6 @@ function Example(props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton> */}
           <div>
             <IconButton edge="start" 
             className={classes.menuButton} 
@@ -71,7 +65,6 @@ function Example(props) {
             aria-controls="menu-appbar"
             aria-haspopup="true"
             onClick={handleMenu}
-            color="inherit"
             >
               <MenuIcon />
             </IconButton>
@@ -121,6 +114,6 @@ function Example(props) {
   );
 }
 
-export default Example;
+export default NavBar;
 
 

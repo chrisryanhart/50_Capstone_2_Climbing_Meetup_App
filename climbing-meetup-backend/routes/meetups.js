@@ -47,11 +47,11 @@ router.post('/new',ensureLoggedIn, async function(req,res,next){
     try{
         const verifiedMeetupData = jsonschema.validate(req.body,meetupFormSchema);
 
-        if(!verifiedMeetupData.valid){
-            let listOfErrors = verifiedMeetupData.errors.map(err => err.stack);
-            let newError = new BadRequestError(listOfErrors);
-            return next(newError);
-        }
+        // if(!verifiedMeetupData.valid){
+        //     let listOfErrors = verifiedMeetupData.errors.map(err => err.stack);
+        //     let newError = new BadRequestError(listOfErrors);
+        //     return next(newError);
+        // }
 
         const creator_user_id = req.user.id;
         // confirm data validation with json schema

@@ -24,10 +24,10 @@ const useStyles = makeStyles({
     marginBottom: 12,
   },
 });
-// style={{ marginLeft: '5px'}}
+
 export default function MeetupCard() {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+  // const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <Card className={classes.root} style={{ marginTop: '10px'}}>
@@ -35,37 +35,53 @@ export default function MeetupCard() {
         <Typography variant="h5" component="h2" >
           Climbing at LEF 
         </Typography>
-        <Typography variant="h7" component="h7" style={{ marginLeft: '5px'}}>
+        <Typography variant="h6" component="h6" style={{ marginLeft: '5px'}}>
           <i>Date: 1/5/23</i>
           <br/>
         </Typography>
-        <Typography variant="h7" component="h7" style={{ marginLeft: '5px'}}>
+        <Typography variant="h6" component="h6" style={{ marginLeft: '5px'}}>
           <i>Time: 5:00 PM</i>
           <br/>
         </Typography>
-        <Typography variant="h7" component="h7" style={{ marginLeft: '5px'}}>
+        <Typography variant="h6" component="h6" style={{ marginLeft: '5px'}}>
           <i>Type: Lead Climbing</i>
           <br/>
         </Typography>
-        <Typography variant="h7" component="h7" style={{ marginLeft: '5px'}}>
+        <Typography variant="h6" component="h6" style={{ marginLeft: '5px'}}>
           <i>
             Description: Climb in the evening after work.  Bring your kids.
           </i>
         </Typography>
-        <Typography variant="body2" component="div">
-          <b>Organized by:</b> Spider Monkey
-          <Avatar 
-            alt="Spider Monkey" 
-            src="https://firebasestorage.googleapis.com/v0/b/climbing-meetup-app.appspot.com/o/sean-benesh-VnmbcgAfL3Q-unsplash.jpg?alt=media&token=9f5685b0-3529-40c3-98d2-5b54b1b09825"
-            />
+        <Typography className={classes.title} gutterBottom>
+          <b>Organized by: </b> Chris Hart
         </Typography>
-        <Typography variant="body2" sx={{display: 'inline-block'}}>
-          <b>Attendees: </b> Chris
-          <Avatar 
-            alt="Spider Monkey" 
-            src="https://firebasestorage.googleapis.com/v0/b/climbing-meetup-app.appspot.com/o/sean-benesh-VnmbcgAfL3Q-unsplash.jpg?alt=media&token=9f5685b0-3529-40c3-98d2-5b54b1b09825"
-            />
+        <div>
+            <div style={{display: 'flex'}}>
+                <Avatar 
+                        alt="Spider Monkey" 
+                        src="https://firebasestorage.googleapis.com/v0/b/climbing-meetup-app.appspot.com/o/sean-benesh-VnmbcgAfL3Q-unsplash.jpg?alt=media&token=9f5685b0-3529-40c3-98d2-5b54b1b09825"
+                        />
+                <Typography variant="body2" style={{marginLeft: '10px',marginTop: '10px',alignItems: 'center'}}>
+                    Chris Hart
+                </Typography>
+            </div>
+        </div>
+        <Typography className={classes.title} gutterBottom>
+          <b>Attendees: </b>
         </Typography>
+        <div >
+            <div style={{display: 'flex'}}>
+                <Avatar 
+                        alt="Spider Monkey" 
+                        src="https://firebasestorage.googleapis.com/v0/b/climbing-meetup-app.appspot.com/o/sean-benesh-VnmbcgAfL3Q-unsplash.jpg?alt=media&token=9f5685b0-3529-40c3-98d2-5b54b1b09825"
+                        />
+                <Typography variant="body2" style={{marginLeft: '10px',marginTop: '10px',alignItems: 'center'}}>
+                    Chris Hart
+                    <br/>
+                </Typography>
+            </div>
+        </div>
+
       </CardContent>
       <CardActions>
         <Button size="small">Join Meetup</Button>

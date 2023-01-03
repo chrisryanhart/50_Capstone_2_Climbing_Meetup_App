@@ -1,12 +1,12 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import MeetupFormCard from "./MeetupFormCard";
-import MeetupCard from "./MeetupCard";
-import ProfileContainer from "./ProfileContainer";
 import Home from "./Home";
-import ManageMeetupContainer from "./ManageMeetupContainer";
 import LoginFormCard from "./LoginForm";
 import ProfileFormCard from "./ProfileFormCard";
+import ProfileCard from './ProfileCard';
+import MeetupList from "./MeetupList";
+import ManageMeetupCard from "./ManageMeetupCard";
 
 
 function Routes(){
@@ -27,10 +27,10 @@ function Routes(){
                     <MeetupFormCard/>
                 </Route>
                 <Route exact path="/meetups">
-                    <MeetupCard/>
+                    <MeetupList/>
                 </Route>
                 <Route exact path="/meetups/:id/manage">
-                    <ManageMeetupContainer/>
+                    <ManageMeetupCard/>
                 </Route>
                 <Route exact path="/meetups/:id/edit">
                     
@@ -46,7 +46,7 @@ function Routes(){
 
                 </Route>
                 <Route exact path="/users/:id">
-                    <ProfileContainer/>
+                    <ProfileCard/>
                 </Route>
             </Switch>
         </div>

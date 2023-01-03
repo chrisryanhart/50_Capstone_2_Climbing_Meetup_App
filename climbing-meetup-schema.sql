@@ -33,6 +33,7 @@ CREATE TABLE meetups (
         REFERENCES users ON DELETE CASCADE,
     date DATE NOT NULL,
     time TIME NOT NULL,
+    date_time_utc TIMESTAMPTZ,
     duration INTEGER NOT NULL,
     location_id INT NOT NULL
         REFERENCES locations ON DELETE SET NULL,

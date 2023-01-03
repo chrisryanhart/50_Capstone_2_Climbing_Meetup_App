@@ -2,19 +2,18 @@ import React from "react";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import LoginFormCard from './LoginForm';
+import ProfileCard from "../ProfileCard";
 
 
-function LoginFormContainer(){
-
+function ProfileContainer(){
 
 
     return (
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="sm">
-                <Typography component="div" style={{ paddingTop: '20px', height: '100vh' }} >
-                    <LoginFormCard/>
+                <Typography component="div" style={{paddingTop: '20px', margin: 'auto' }} >
+                    <ProfileCard/>
                 </Typography>
 
             </Container>
@@ -23,4 +22,4 @@ function LoginFormContainer(){
 
 }
 
-export default LoginFormContainer;
+export default ProfileContainer;

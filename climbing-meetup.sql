@@ -1,4 +1,4 @@
-\echo 'Delete and recreate jobly db?'
+\echo 'Delete and recreate climbing_metup db?'
 \prompt 'Return for yes or control-C to cancel > ' foo
 
 DROP DATABASE climbing_meetup;

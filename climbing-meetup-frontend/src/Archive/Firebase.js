@@ -53,3 +53,21 @@ export {firebaseApp, storage};
 //   }
 // } 
 
+
+  // use const storage = getStorage() or const storage = getStorage(app);
+
+  // need to create a ref to upload/download data
+  // const storageRef = ref(storage, 'image.jpg');
+
+  // 'file' comes from the Blob or File API
+  // uploadBytes(storageRef, file).then((snapshot) => {
+  //   console.log('Uploaded a blob or file!');
+  // });
+
+  // const url = 'sean-benesh-VnmbcgAfL3Q-unsplash.jpg';
+  
+ 
+  // Get the download URL
+  // async function getImage(){
+  //   export declare function getBytes(ref: StorageReference, maxDownloadSizeBytes?: number): Promise<ArrayBuffer>;
+  // }

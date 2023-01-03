@@ -69,7 +69,8 @@ class Meetup{
         SELECT m.id, 
             creator_user.name AS creator_name, 
             m.date, 
-            m.time, 
+            m.time,
+            m.date_time_utc, 
             m.duration, 
             l.name AS location_name, 
             m.description, 
@@ -85,6 +86,8 @@ class Meetup{
         LEFT JOIN users attendee_user
          ON attendee_user.id = ma.attendee_user_id
         WHERE m.id=$1`,[id]);
+
+        const dateTime = query.rows[0].date_time_utc;
         
         if(query.rowCount === 0) throw new NotFoundError('No such meetup exists.');
 
@@ -108,7 +111,8 @@ class Meetup{
                     let newMeetup = {id:meetup.id, 
                         creator_name:meetup.creator_name, 
                         date:meetup.date, 
-                        time:meetup.time, 
+                        time:meetup.time,
+                        date_time_utc:meetup.date_time_utc, 
                         duration: meetup.duration,
                         location_name: meetup.location_name,
                         description: meetup.description,
@@ -129,6 +133,7 @@ class Meetup{
         const { date,
             time,
             duration,
+            date_time_utc,
             location_id,
             description } = details;
     
@@ -136,14 +141,16 @@ class Meetup{
             `INSERT INTO meetups (creator_user_id,
                                 date,
                                 time,
+                                date_time_utc,
                                 duration,
                                 location_id,
                                 description)
-            VALUES ($1,$2,$3,$4,$5,$6)
+            VALUES ($1,$2,$3,$4,$5,$6,$7)
             RETURNING id,creator_user_id`,
             [creator_user_id,
                 date,
                 time,
+                date_time_utc,
                 duration,
                 location_id,
                 description]);

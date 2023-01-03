@@ -1293,3 +1293,16 @@ VALUES (1,2,'pending'),
     (1,3,'approved'),
     (2,1,'approved'),
     (3,1,'rejected');
+
+
+
+UPDATE meetups
+SET date_time_utc='2023-01-05 17:00:00-02'
+WHERE id=2;
+
+"2023-01-05T22:00:00.000Z"
+
+
+UPDATE meetups
+SET date_time_utc=ç
+WHERE id=3;

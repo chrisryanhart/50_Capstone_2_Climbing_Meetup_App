@@ -2,10 +2,10 @@ import React from "react";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import SimpleCard from "./MeetupFormCard";
+import LoginFormCard from '../LoginForm';
 
 
-function NewMeetupContainer(){
+function LoginFormContainer(){
 
 
 
@@ -14,7 +14,7 @@ function NewMeetupContainer(){
             <CssBaseline />
             <Container maxWidth="sm">
                 <Typography component="div" style={{ paddingTop: '20px', height: '100vh' }} >
-                    <SimpleCard/>
+                    <LoginFormCard/>
                 </Typography>
 
             </Container>
@@ -23,6 +23,4 @@ function NewMeetupContainer(){
 
 }
 
-export default NewMeetupContainer;
-
-
+export default LoginFormContainer;

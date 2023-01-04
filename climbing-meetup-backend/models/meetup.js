@@ -6,6 +6,7 @@ class Meetup{
         // filter by locations
         const query = await db.query(`
             SELECT m.id, 
+                m.creator_user_id,
                 creator_user.name AS creator_name, 
                 m.date, 
                 m.time, 
@@ -44,6 +45,7 @@ class Meetup{
                 }else{
                     meetupIds.add(meetup.id);
                         let newMeetup = {id:meetup.id, 
+                            creator_user_id: meetup.creator_user_id,
                             creator_name:meetup.creator_name, 
                             date:meetup.date, 
                             time:meetup.time, 

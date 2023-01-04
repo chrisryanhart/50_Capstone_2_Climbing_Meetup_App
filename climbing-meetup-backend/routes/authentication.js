@@ -54,6 +54,8 @@ router.post('/login', async function(req,res,next){
         // if undefined throw error
 
         let token = jwt.sign({id:user.id,username:user.username},SECRET_KEY);
+
+        // return token here?
         return res.json({token});
 
     }catch(err){

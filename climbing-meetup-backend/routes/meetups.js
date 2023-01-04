@@ -18,7 +18,7 @@ router.get('/',ensureLoggedIn, async function(req,res,next){
     try{
         // filter by location
         // collect location from form data
-        const location_id = req.body.location_id;
+        const location_id = req.query.location_id;
 
         const result = await Meetup.getAll(location_id);
         return res.json(result);

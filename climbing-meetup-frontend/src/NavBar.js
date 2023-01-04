@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import CountContext from './UserContext';
 
 
 // import {
@@ -48,6 +49,8 @@ function NavBar(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const {currUserId} = useContext(CountContext);
 
   // const [collapsed, setCollapsed] = useState(true);
 
@@ -99,7 +102,8 @@ function NavBar(props) {
                   <Link to="/meetups/new">Make New Meetup</Link> 
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <Link to="/users/1">User Profile</Link> 
+                  {/* this should be from user */}
+                  <Link to={`/users/${currUserId}`}>My Profile</Link> 
                 </MenuItem>
             </Menu>
 

@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const users = require('./routes/users');
 const meetups = require('./routes/meetups');
 const authentication = require('./routes/authentication');
@@ -9,15 +10,19 @@ const {authenticateJWT} = require('./middleware/authorization');
 
 const app = express();
 
+app.use(cors());
 // parse json
 app.use(express.json());
 // parse form data
 app.use(express.urlencoded({extended: true}));
 
+app.use(morgan("tiny"));
+app.use(authenticateJWT);
+
 // allow user to register or login without token
 app.use('/authentication', authentication);
 // confirm user authentication before accessing protected routes
-app.use(authenticateJWT);
+
 
 
 app.use('/users', users);

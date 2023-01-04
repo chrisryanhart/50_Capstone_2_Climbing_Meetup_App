@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -40,13 +40,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function ProfileCard() {
+
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  // retrieve user profile
+  const { id } = useParams();
+
+  const [userProfile, setUserProfile] = userProfile([]);
+
+  useEffect(function fetchUserProfile(){
+    async function retrieveUserProfile(){
+      
+    }
+  },[]);
 
   return (
     <Card className={classes.root} style={{margin: 'auto' }}>

@@ -1306,3 +1306,7 @@ WHERE id=2;
 UPDATE meetups
 SET date_time_utc=ç
 WHERE id=3;
+
+UPDATE users
+SET name='bobby jones'
+WHERE id=5;

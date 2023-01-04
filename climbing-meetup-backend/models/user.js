@@ -117,6 +117,7 @@ class User{
     static async getUserMeetups(user_id){
         const query = await db.query(`
             SELECT m.id, 
+                m.creator_user_id,
                 creator_user.name AS creator_name, 
                 m.date, 
                 m.time, 
@@ -147,14 +148,15 @@ class User{
                 for(const result of resultArr){
                     if(result.id === meetup.id){
                         if(meetup.attendee_name !== null){
-                            let newAttendee = {'name': meetup.attendee_name,'status':meetup.join_request_status}
+                            let newAttendee = {'id':meetup.id, 'name': meetup.attendee_name,'status':meetup.join_request_status}
                             result.attendees.push(newAttendee);
                         }
                     }
                 }
             }else{
                 meetupIds.add(meetup.id);
-                    let newMeetup = {id:meetup.id, 
+                    let newMeetup = {id:meetup.id,
+                        creator_user_id: meetup.creator_user_id,
                         creator_name:meetup.creator_name, 
                         date:meetup.date, 
                         time:meetup.time, 
@@ -164,7 +166,7 @@ class User{
                         attendees:[]}
 
                     if(meetup.attendee_name !== null){
-                        newMeetup.attendees.push({'name':meetup.attendee_name,'status':meetup.join_request_status})
+                        newMeetup.attendees.push({'id':meetup.id,'name':meetup.attendee_name,'status':meetup.join_request_status})
                     }
 
                     resultArr.push(newMeetup);

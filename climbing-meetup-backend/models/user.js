@@ -108,7 +108,7 @@ class User{
              FROM users
              WHERE id=$1`,[id]);
 
-        if(result.rowCount === 0) throw new BadRequestError('Invalid input. No such user exists.');
+        if(query.rowCount === 0) throw new BadRequestError('Invalid input. No such user exists.');
 
         return query.rows[0];
     }

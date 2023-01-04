@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Link, useParams } from 'react-router-dom';
+import ClimbMeetupApi from './api';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -52,18 +53,23 @@ export default function ProfileCard() {
   // retrieve user profile
   const { id } = useParams();
 
-  const [userProfile, setUserProfile] = userProfile([]);
+  const [userProfile, setUserProfile] = useState([]);
 
   useEffect(function fetchUserProfile(){
     async function retrieveUserProfile(){
-      
+      let res = await ClimbMeetupApi.getUser(id);
+      setUserProfile(res);
     }
+    retrieveUserProfile();
   },[]);
+
+  // now update the card with the user informations
+  // profiles should now update based on the url params
 
   return (
     <Card className={classes.root} style={{margin: 'auto' }}>
       <CardHeader
-        title="Chris Hart"
+        title={userProfile.name}
         subheader="Climbing, Bouldering"
       />
       <CardMedia
@@ -73,17 +79,16 @@ export default function ProfileCard() {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          <b>Bio:</b> I have climbed for years at the RRG.  Now have a family and climb indoors only.  
-          Feel free to bring your kids to climb!
+          <b>Bio:</b> {userProfile.bio}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          <b>Location:</b> LEF
+          <b>Location:</b> {userProfile.location_id}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          <b>Age:</b> 35
+          <b>Age:</b> {userProfile.user_age}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          <b>Gender:</b> M
+          <b>Gender:</b> {userProfile.user_gender}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
           <b>Belay Experience:</b> High

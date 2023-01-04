@@ -53,6 +53,11 @@ class ClimbMeetupApi {
 
   }
 
+  static async getUser(id){
+    let res = await this.request(`users/${id}`);
+    return res;
+  }
+
   static async createMeetup(){
 
   }

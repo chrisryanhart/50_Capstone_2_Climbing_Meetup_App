@@ -58,11 +58,19 @@ class ClimbMeetupApi {
     return res;
   }
 
+  static async joinMeetup(meetup_id){
+    let res = await this.request(`meetups/${meetup_id}/join`,{},'post');
+    return res;
+  }
+
+  static async leaveMeetup(meetup_id){
+    let res = await this.request(`meetups/${meetup_id}/leave`,{},'delete')
+    return res;
+  }
+
   static async createMeetup(){
 
   }
-
-
 }
 
 // for now, put token ("testuser" / "password" on class)

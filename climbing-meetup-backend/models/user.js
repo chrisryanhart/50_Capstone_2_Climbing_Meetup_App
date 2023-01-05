@@ -93,20 +93,23 @@ class User{
 
     static async getUser(id){
         const query = await db.query(
-            `SELECT id,
-                username,
-                password,
-                name ,
-                profile_image,
-                user_age,
-                user_gender,
-                is_parent,
-                has_dogs,
-                bio,
-                location_id,    
-                preferences 
-             FROM users
-             WHERE id=$1`,[id]);
+            `SELECT u.id,
+                u.username,
+                u.password,
+                u.name,
+                u.profile_image,
+                u.user_age,
+                u.user_gender,
+                u.is_parent,
+                u.has_dogs,
+                u.bio,
+                l.name AS location_name,
+                u.location_id,    
+                u.preferences 
+             FROM users u
+             JOIN locations l
+              ON u.location_id=l.id
+             WHERE u.id=$1`,[id]);
 
         if(query.rowCount === 0) throw new BadRequestError('Invalid input. No such user exists.');
 

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {Link} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Avatar } from '@material-ui/core';
 import CountContext from './UserContext';
+import ClimbMeetupApi from './api';
 
 const useStyles = makeStyles({
   root: {
@@ -31,16 +32,26 @@ export default function MeetupCard({details}) {
 
   const {userMeetups, currUserId} = useContext(CountContext);
 
+  // check is the current user created the meetup
   const isCreator = currUserId === details.creator_user_id ? true : false;
 
+  // const attendeeList = details.attendees;
+  const [attendeeList, setAttendeeList] = useState(details.attendees);
+  const attendeeStatus = {status: ''};
 
-  const attendeeList = details.attendees;
-
-  // loop through attendees
+  // get list of attendee elements to display
   const attendees = attendeeList.map(attendee =>{
 
-      return (<div >
-          <div style={{display: 'flex'}}>
+      if(!isCreator){
+        if(currUserId === attendee.id){
+          attendeeStatus.status = attendee.status;
+        }
+      }
+
+      return (
+      <div >
+        <Link to={`users/${attendee.id}`}>
+            <div style={{display: 'flex'}}>
               <Avatar 
                       alt="Spider Monkey" 
                       src="https://firebasestorage.googleapis.com/v0/b/climbing-meetup-app.appspot.com/o/sean-benesh-VnmbcgAfL3Q-unsplash.jpg?alt=media&token=9f5685b0-3529-40c3-98d2-5b54b1b09825"
@@ -49,17 +60,43 @@ export default function MeetupCard({details}) {
                   {attendee.name}
                   <br/>
               </Typography>
-          </div>
+            </div>
+        </Link>
+
       </div>);
   });
 
+  // set initial meetupJoinStatus after checking is user is in the attendee list
+  const [meetupJoinStatus, setMeetupJoinStatus] = useState(attendeeStatus.status);
+  const [pageLoaded, setPageLoaded] = useState(false);
 
-  // add manage meetup function
 
+  // handle which button to display based on attendee status
+  let joinStatusButton;
 
+  if(meetupJoinStatus===''){
+    joinStatusButton = <Button onClick={handleJoin} size="small">Join Meetup</Button>;
+  }
+  if(meetupJoinStatus==='pending'){
+    joinStatusButton = <Button size="small">Pending</Button>;
+  }else if(meetupJoinStatus==='approved'){
+    joinStatusButton = <Button onClick={leaveMeetup} size="small">Leave Meetup</Button>;
+  }
 
-  
-  
+  const handleJoin = async () => {
+    let res = await ClimbMeetupApi.joinMeetup(details.id);
+    setMeetupJoinStatus(res.join_request_status);
+  }
+
+  const leaveMeetup = async () => {
+    // remove attendee from state
+    // call database
+    let res = await ClimbMeetupApi.leaveMeetup(details.id);
+    console.log('test');
+    // setAttendee list
+    setMeetupJoinStatus('');
+    setAttendeeList(attendees => attendees.filter(attendee => attendee.id !== currUserId));
+  }
 
 
   return (
@@ -89,15 +126,17 @@ export default function MeetupCard({details}) {
           <b>Organized by: </b> 
         </Typography>
         <div>
-            <div style={{display: 'flex'}}>
-                <Avatar 
-                        alt="Spider Monkey" 
-                        src="https://firebasestorage.googleapis.com/v0/b/climbing-meetup-app.appspot.com/o/sean-benesh-VnmbcgAfL3Q-unsplash.jpg?alt=media&token=9f5685b0-3529-40c3-98d2-5b54b1b09825"
-                        />
-                <Typography variant="body2" style={{marginLeft: '10px',marginTop: '10px',alignItems: 'center'}}>
-                  {details.creator_name}
-                </Typography>
-            </div>
+            <Link to={`users/${details.creator_user_id}`}>
+              <div style={{display: 'flex'}}>
+                  <Avatar 
+                          alt="Spider Monkey" 
+                          src="https://firebasestorage.googleapis.com/v0/b/climbing-meetup-app.appspot.com/o/sean-benesh-VnmbcgAfL3Q-unsplash.jpg?alt=media&token=9f5685b0-3529-40c3-98d2-5b54b1b09825"
+                          />
+                  <Typography variant="body2" style={{marginLeft: '10px',marginTop: '10px',alignItems: 'center'}}>
+                    {details.creator_name}
+                  </Typography>
+              </div>
+            </Link>
         </div>
         <Typography className={classes.title} gutterBottom>
           <b>Attendees: </b>
@@ -105,7 +144,7 @@ export default function MeetupCard({details}) {
         {attendees}
       </CardContent>
       <CardActions>
-        {!isCreator && <Button size="small">Join Meetup</Button>}
+        {!isCreator && joinStatusButton}
         {isCreator && <Button size="small"><Link to="/meetups/1/manage">Manage</Link></Button>}
       </CardActions>
 

@@ -82,7 +82,8 @@ export default function ProfileCard() {
           <b>Bio:</b> {userProfile.bio}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          <b>Location:</b> {userProfile.location_id}
+          {/* add actual location instead of id */}
+          <b>Location:</b> {userProfile.location_name}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
           <b>Age:</b> {userProfile.user_age}

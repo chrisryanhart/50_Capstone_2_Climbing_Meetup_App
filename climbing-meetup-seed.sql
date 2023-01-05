@@ -1294,7 +1294,8 @@ VALUES (1,2,'pending'),
     (2,1,'approved'),
     (3,1,'rejected');
 
-
+INSERT INTO meetups_attendees (meetup_id, attendee_user_id,join_request_status)
+VALUES (3,2,'approved');
 
 UPDATE meetups
 SET date_time_utc='2023-01-05 17:00:00-02'

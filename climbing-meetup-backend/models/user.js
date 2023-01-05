@@ -119,7 +119,7 @@ class User{
     // returns array of meetups in the following format: [{id:3, creator_name:'spider man',attendees:[{'testuser1':'approved'},{'testuser2':'pending'}]}]
     static async getUserMeetups(user_id){
         const query = await db.query(`
-            SELECT m.id, 
+        SELECT m.id, 
                 m.creator_user_id,
                 creator_user.name AS creator_name, 
                 m.date, 
@@ -139,7 +139,12 @@ class User{
                 ON ma.meetup_id=m.id
             LEFT JOIN users attendee_user
                 ON attendee_user.id = ma.attendee_user_id
-            WHERE ma.attendee_user_id=$1 OR m.creator_user_id=$1`,
+            WHERE creator_user.id=$1 OR m.id =  ANY(SELECT m.id
+                            FROM meetups m 
+                            LEFT JOIN meetups_attendees ma 
+                                ON m.id = ma.meetup_id 
+                            WHERE ma.attendee_user_id=$1)
+            ORDER BY m.id ASC`,
             [user_id]);
 
         let meetupIds = new Set();

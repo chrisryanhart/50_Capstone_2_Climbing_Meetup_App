@@ -24,9 +24,8 @@ class Meetup{
             LEFT JOIN meetups_attendees ma
              ON ma.meetup_id=m.id
             LEFT JOIN users attendee_user
-             ON attendee_user.id = ma.attendee_user_id
-            WHERE l.id=$1`,
-            [location_id]);
+             ON attendee_user.id = ma.attendee_user_id`
+            );
         
             let meetupIds = new Set();
 

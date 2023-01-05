@@ -27,7 +27,7 @@ function Routes(){
                     <MeetupFormCard/>
                 </Route>
                 <Route exact path="/meetups">
-                    <MeetupList/>
+                    <MeetupList type='allMeetups'/>
                 </Route>
                 <Route exact path="/meetups/:id/manage">
                     <ManageMeetupCard/>
@@ -40,7 +40,7 @@ function Routes(){
                 </Route>
 
                 <Route exact path="/users/:id/meetups">
-                    
+                    <MeetupList type='userMeetups'/>
                 </Route>
                 <Route exact path="/users/:id/edit">
 

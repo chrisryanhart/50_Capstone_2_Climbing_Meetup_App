@@ -43,7 +43,7 @@ class ClimbMeetupApi {
 
   static async getMeetups() {
     // consider adding more filtering later
-    let res = await this.request(`meetups`,{location_id:446});
+    let res = await this.request(`meetups`);
     return res;
   }
 

@@ -126,7 +126,8 @@ class User{
                 m.time, 
                 m.duration, 
                 l.name AS location_name, 
-                m.description, 
+                m.description,
+                attendee_user.id AS attendee_user_id,
                 attendee_user.name AS attendee_name,
                 ma.join_request_status            
             FROM meetups m
@@ -151,7 +152,7 @@ class User{
                 for(const result of resultArr){
                     if(result.id === meetup.id){
                         if(meetup.attendee_name !== null){
-                            let newAttendee = {'id':meetup.id, 'name': meetup.attendee_name,'status':meetup.join_request_status}
+                            let newAttendee = {'id':meetup.attendee_user_id, 'name': meetup.attendee_name,'status':meetup.join_request_status}
                             result.attendees.push(newAttendee);
                         }
                     }
@@ -169,7 +170,7 @@ class User{
                         attendees:[]}
 
                     if(meetup.attendee_name !== null){
-                        newMeetup.attendees.push({'id':meetup.id,'name':meetup.attendee_name,'status':meetup.join_request_status})
+                        newMeetup.attendees.push({'id':meetup.attendee_user_id,'name':meetup.attendee_name,'status':meetup.join_request_status})
                     }
 
                     resultArr.push(newMeetup);

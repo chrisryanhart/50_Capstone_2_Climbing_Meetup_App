@@ -1,19 +1,33 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
+import { useParams } from "react-router-dom";
 import MeetupCard from "./MeetupCard";
 import ClimbMeetupApi from "./api";
+import CountContext from "./UserContext";
 
 
-function MeetupList(){
+function MeetupList({type}){
+
+  const {id} = useParams();
+
+  const { currUserId } = useContext(CountContext);
     
   const [meetups,setMeetups] = useState([]);
+
   // save the users url in their profile 
 
   useEffect(function fetchMeetups(){
-    async function retrieveMeetups(){
+    async function retrieveAllMeetups(){
+      // can add conditional that manages which api call to use
       let res = await ClimbMeetupApi.getMeetups();
       setMeetups(res);
     }
-    retrieveMeetups();
+    async function retrieveUserMeetups(){
+      // can add conditional that manages which api call to use
+      let res = await ClimbMeetupApi.getUserMeetups(id);
+      setMeetups(res);
+    }
+    if(type==='allMeetups') retrieveAllMeetups();
+    if(type==='userMeetups') retrieveUserMeetups();
   },[]);
 
   const meetupCards = meetups.map(meetup => <MeetupCard key={meetup.id} details={meetup}/>);

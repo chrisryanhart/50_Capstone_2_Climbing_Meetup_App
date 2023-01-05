@@ -48,28 +48,44 @@ export default function MeetupCard({details}) {
         }
       }
 
-      return (
-      <div >
-        <Link to={`users/${attendee.id}`}>
-            <div style={{display: 'flex'}}>
-              <Avatar 
-                      alt="Spider Monkey" 
-                      src="https://firebasestorage.googleapis.com/v0/b/climbing-meetup-app.appspot.com/o/sean-benesh-VnmbcgAfL3Q-unsplash.jpg?alt=media&token=9f5685b0-3529-40c3-98d2-5b54b1b09825"
-                      />
-              <Typography variant="body2" style={{marginLeft: '10px',marginTop: '10px',alignItems: 'center'}}>
-                  {attendee.name}
-                  <br/>
-              </Typography>
-            </div>
-        </Link>
+      if(attendee.status==='approved'){
+        return (
+        <div >
+          <Link to={`users/${attendee.id}`}>
+              <div style={{display: 'flex'}}>
+                <Avatar 
+                        alt="Spider Monkey" 
+                        src="https://firebasestorage.googleapis.com/v0/b/climbing-meetup-app.appspot.com/o/sean-benesh-VnmbcgAfL3Q-unsplash.jpg?alt=media&token=9f5685b0-3529-40c3-98d2-5b54b1b09825"
+                        />
+                <Typography variant="body2" style={{marginLeft: '10px',marginTop: '10px',alignItems: 'center'}}>
+                    {attendee.name}
+                    <br/>
+                </Typography>
+              </div>
+          </Link>
 
-      </div>);
+        </div>);
+        }
   });
 
   // set initial meetupJoinStatus after checking is user is in the attendee list
   const [meetupJoinStatus, setMeetupJoinStatus] = useState(attendeeStatus.status);
   const [pageLoaded, setPageLoaded] = useState(false);
 
+    const handleJoin = async () => {
+      let res = await ClimbMeetupApi.joinMeetup(details.id);
+      setMeetupJoinStatus(res.join_request_status);
+    }
+
+    const leaveMeetup = async () => {
+      // remove attendee from state
+      // call database
+      let res = await ClimbMeetupApi.leaveMeetup(details.id);
+      console.log('test');
+      // setAttendee list
+      setMeetupJoinStatus('');
+      setAttendeeList(attendees => attendees.filter(attendee => attendee.id !== currUserId));
+    }
 
   // handle which button to display based on attendee status
   let joinStatusButton;
@@ -83,20 +99,7 @@ export default function MeetupCard({details}) {
     joinStatusButton = <Button onClick={leaveMeetup} size="small">Leave Meetup</Button>;
   }
 
-  const handleJoin = async () => {
-    let res = await ClimbMeetupApi.joinMeetup(details.id);
-    setMeetupJoinStatus(res.join_request_status);
-  }
 
-  const leaveMeetup = async () => {
-    // remove attendee from state
-    // call database
-    let res = await ClimbMeetupApi.leaveMeetup(details.id);
-    console.log('test');
-    // setAttendee list
-    setMeetupJoinStatus('');
-    setAttendeeList(attendees => attendees.filter(attendee => attendee.id !== currUserId));
-  }
 
 
   return (

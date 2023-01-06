@@ -8,8 +8,10 @@ const jwt = require('jsonwebtoken');
 function authenticateJWT(req,res,next){
     try {
         const submittedToken = req.headers.authorization;
-        const payload = jwt.verify(submittedToken,SECRET_KEY);
-        req.user = payload;
+        if(submittedToken){
+            const payload = jwt.verify(submittedToken,SECRET_KEY);
+            req.user = payload;
+        }
         return next();
     } catch(err){
         return next(err);

@@ -17,13 +17,15 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use(morgan("tiny"));
+
+
 app.use(authenticateJWT);
 
 // allow user to register or login without token
-app.use('/authentication', authentication);
+
 // confirm user authentication before accessing protected routes
 
-
+app.use('/', authentication);
 
 app.use('/users', users);
 app.use('/meetups', meetups);

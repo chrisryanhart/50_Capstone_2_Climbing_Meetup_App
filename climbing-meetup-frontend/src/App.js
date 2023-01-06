@@ -8,27 +8,42 @@ import CountContext from './UserContext';
 import ClimbMeetupApi from './api';
 
 function App() {
-  const INITIAL_TOKEN_STATE = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJ0ZXN0dXNlcjQiLCJpYXQiOjE2NzI1MDQ4MzN9.z9aOLGaqGSJNIrPZoggZzmCYAS9I9DT5kLOO_ONf46A";
+  const INITIAL_TOKEN_STATE = "";
   // pass handleLogin down to context
   // execute handleLogin in the LoginForm component upon form submission
   const [token,setToken] = useState(INITIAL_TOKEN_STATE);
   const [userMeetups,setUserMeetups] = useState([]);
   const [currUserId,setCurrUserId] = useState(5);
 
-  useEffect(function fetchProfile(){
-    async function retrieveProfile(){
-      let res = await ClimbMeetupApi.getUserMeetups(5);
-      setUserMeetups(res);
-    }
-    retrieveProfile();
-  },[]);
+  // useEffect(function fetchProfile(){
+  //   async function retrieveProfile(){
+  //     let res = await ClimbMeetupApi.getUserMeetups(token.);
+  //     setUserMeetups(res);
+  //   }
+  //   if(token !== '') retrieveProfile();
+  // },[]);
+
+  const registerUser = () => {
+
+  }
+
+  const login = async (loginData) => {
+
+    let res = await ClimbMeetupApi.login(loginData);
+
+    // get currUserId too
+    console.log(res);
+    setToken(res.token);
+  }
+
+  ClimbMeetupApi.token = token;
 
   return (
     <div className="App">
 
       <BrowserRouter>
         {/* <ResponsiveAppBar/> */}
-        <CountContext.Provider value={{token, userMeetups, currUserId}}>
+        <CountContext.Provider value={{token, userMeetups, currUserId,login,registerUser}}>
           <NavBar/>
           <NewContainer/>
           {/* <Routes/> */}

@@ -95,7 +95,7 @@ export default function ProfileCard() {
           <b>Belay Experience:</b> High
         </Typography>
         <Typography variant="body2" component="p">
-          <Link to="/meetups"><b>See My Meetups</b></Link>
+          <Link to={`/users/${id}/meetups`}><b>See My Meetups</b></Link>
         </Typography>
       </CardContent>
     </Card>

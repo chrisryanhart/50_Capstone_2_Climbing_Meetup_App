@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 // import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import CountContext from './UserContext';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles({
   root: {
@@ -25,7 +27,31 @@ const useStyles = makeStyles({
 
 export default function LoginFormCard() {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+
+  const {login} = useContext(CountContext);
+
+  const INITIAL_STATE = {username: '', password:''};
+
+  const [loginFormData,setLoginFormData] = useState(INITIAL_STATE);
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    const { value, name } = e.target;
+
+    setLoginFormData(data => ({...data, [name]: value}));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(loginFormData);
+    setLoginFormData(INITIAL_STATE);
+  }
+
+  // have state for form data
+
+  // upon submit call login func
+
+  // reset the form to initial state
 
   return (
     <Card className={classes.root}>
@@ -35,15 +61,16 @@ export default function LoginFormCard() {
         </Typography>
 
         <Typography variant="body2" component="div">
-            <form>
+            <form >
                 <div>
-                    <label>Username: </label>
-                    <input/>
+                    <label for='username'>Username: </label>
+                    <input name='username' onChange={handleUpdate} value={loginFormData.username}/>
                 </div>
                 <div>
-                    <label>Password: </label>
-                    <input/>
+                    <label for='password'>Password: </label>
+                    <input onChange={handleUpdate} name='password' value={loginFormData.password}/>
                 </div>
+                <Button onClick={handleSubmit} variant='contained'>Submit</Button>
             </form>
         </Typography>
       </CardContent>

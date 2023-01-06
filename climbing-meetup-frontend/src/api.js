@@ -1,6 +1,5 @@
-// create api class to call backend api
-
 import axios from "axios";
+import token from './App';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
@@ -68,15 +67,16 @@ class ClimbMeetupApi {
     return res;
   }
 
-  static async createMeetup(){
-
+  static async login(loginData){
+    let res = await this.request(`login`,loginData,'post');
+    return res;
   }
 }
 
 // for now, put token ("testuser" / "password" on class)
 // set token to 
 
-ClimbMeetupApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJ0ZXN0dXNlcjQiLCJpYXQiOjE2NzI1MDQ4MzN9.z9aOLGaqGSJNIrPZoggZzmCYAS9I9DT5kLOO_ONf46A"
+// ClimbMeetupApi.token = token;
 
 
 export default ClimbMeetupApi;

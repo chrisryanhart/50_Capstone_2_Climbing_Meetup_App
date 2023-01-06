@@ -27,6 +27,8 @@ CREATE TABLE users (
     preferences JSON
 );
 
+
+
 CREATE TABLE meetups (
     id SERIAL PRIMARY KEY,
     creator_user_id INTEGER NOT NULL

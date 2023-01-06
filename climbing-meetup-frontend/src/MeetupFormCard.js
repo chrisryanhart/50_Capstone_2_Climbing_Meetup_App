@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -25,7 +25,15 @@ const useStyles = makeStyles({
 
 export default function MeetupFormCard() {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+
+  const handleSubmit = (e) => {
+
+    // redirect to mymeetups after creation
+  }
+
+  const handleChange = (e) => {
+
+  }
 
   return (
     <Card className={classes.root}>
@@ -37,8 +45,8 @@ export default function MeetupFormCard() {
         <Typography variant="body2" component="div">
             <form>
                 <div>
-                    <label>Creator User id: </label>
-                    <input/>
+                    {/* <label>Creator User id: </label> */}
+                    <input name='creator_user_id'/>
                 </div>
                 <div>
                     <label>Date: </label>

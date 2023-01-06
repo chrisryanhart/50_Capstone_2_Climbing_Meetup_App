@@ -28,7 +28,7 @@ router.post('/register', async function(req,res,next){
         const user = await User.register(req.body);
 
         let token = jwt.sign({id:user.id,username:user.username},SECRET_KEY);
-        return res.status(201).json({token});
+        return res.status(201).json({id:user.id,token});
     }catch(err){
         return next(err);
     }
@@ -56,7 +56,7 @@ router.post('/login', async function(req,res,next){
         let token = jwt.sign({id:user.id,username:user.username},SECRET_KEY);
 
         // return token here?
-        return res.json({token});
+        return res.json({id:user.id,token});
 
     }catch(err){
         return next(err);

@@ -71,7 +71,13 @@ class ClimbMeetupApi {
     let res = await this.request(`login`,loginData,'post');
     return res;
   }
+  static async registerUser(registrationData){
+    let res = await this.request('register',registrationData,'post');
+    return res;
+  }
 }
+
+
 
 // for now, put token ("testuser" / "password" on class)
 // set token to 

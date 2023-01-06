@@ -13,7 +13,7 @@ function App() {
   // execute handleLogin in the LoginForm component upon form submission
   const [token,setToken] = useState(INITIAL_TOKEN_STATE);
   const [userMeetups,setUserMeetups] = useState([]);
-  const [currUserId,setCurrUserId] = useState(5);
+  const [currUserId,setCurrUserId] = useState(null);
 
   // useEffect(function fetchProfile(){
   //   async function retrieveProfile(){
@@ -23,24 +23,24 @@ function App() {
   //   if(token !== '') retrieveProfile();
   // },[]);
 
-  const registerUser = () => {
+  const registerUser = async (registrationData) => {
+    let res = await ClimbMeetupApi.registerUser(registrationData);
 
+    setToken(res.token);
+    setCurrUserId(res.id);
   }
 
   const login = async (loginData) => {
 
     let res = await ClimbMeetupApi.login(loginData);
-
-    // get currUserId too
-    console.log(res);
     setToken(res.token);
+    setCurrUserId(res.id);
   }
 
   ClimbMeetupApi.token = token;
 
   return (
     <div className="App">
-
       <BrowserRouter>
         {/* <ResponsiveAppBar/> */}
         <CountContext.Provider value={{token, userMeetups, currUserId,login,registerUser}}>

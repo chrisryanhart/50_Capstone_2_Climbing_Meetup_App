@@ -75,6 +75,12 @@ class ClimbMeetupApi {
     let res = await this.request('register',registrationData,'post');
     return res;
   }
+  static async createMeetup(meetupData,formattedDateTime){
+    meetupData['date_time_utc']=formattedDateTime;
+    let res = await this.request('meetups/new',meetupData,'post');
+    return res;
+
+  }
 }
 
 

@@ -99,7 +99,16 @@ export default function MeetupCard({details}) {
     joinStatusButton = <Button onClick={leaveMeetup} size="small">Leave Meetup</Button>;
   }
 
+  // modify date format
+  // can get the utc_date_time from the database
 
+  const rawDateFormat = new Date(details.date);
+  const dateStr = rawDateFormat.toLocaleDateString('en-US');
+
+  // use the following for utc_date_time conversions
+  // const rawDate = new Date(details.utc_date_time);
+  // const date = rawDate.toLocaleDateString('en-US');
+  // const time = rawDate.toLocaleTimeString('en-US')
 
 
   return (
@@ -109,7 +118,7 @@ export default function MeetupCard({details}) {
           Climb at {details.location_name} 
         </Typography>
         <Typography variant="h6" component="h6" style={{ marginLeft: '5px'}}>
-          <i>Date: {details.date}</i>
+          <i>Date: {dateStr}</i>
           <br/>
         </Typography>
         <Typography variant="h6" component="h6" style={{ marginLeft: '5px'}}>
@@ -129,7 +138,7 @@ export default function MeetupCard({details}) {
           <b>Organized by: </b> 
         </Typography>
         <div>
-            <Link to={`users/${details.creator_user_id}`}>
+            <Link to={`/users/${details.creator_user_id}`}>
               <div style={{display: 'flex'}}>
                   <Avatar 
                           alt="Spider Monkey" 
@@ -148,7 +157,7 @@ export default function MeetupCard({details}) {
       </CardContent>
       <CardActions>
         {!isCreator && joinStatusButton}
-        {isCreator && <Button size="small"><Link to="/meetups/1/manage">Manage</Link></Button>}
+        {isCreator && <Button size="small"><Link to={`/meetups/${details.id}/manage`}>Manage</Link></Button>}
       </CardActions>
 
     </Card>

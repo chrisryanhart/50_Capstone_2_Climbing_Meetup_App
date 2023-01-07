@@ -32,11 +32,11 @@ export default function MeetupFormCard() {
   const {currUserId} = useContext(CountContext);
 
   const INITIAL_STATE = {
-    creatorUserId:currUserId,
     date:'',
     time:'',
-    duration:'',
-    location:'',
+    date_time_utc:'',
+    duration: null,
+    location_id: null,
     description:''
   };
 
@@ -52,15 +52,20 @@ export default function MeetupFormCard() {
 
     // value to send to database
     // value is converted to utc when submitted to database
-    const localDateTimeStr = new Date(dateTime);
+    // const localDateTimeStr = new Date(dateTime);
     
-    console.log('test');
-
-
-    let res = await ClimbMeetupApi.createMeetup(meetupFormData);
+    let res = await ClimbMeetupApi.createMeetup(meetupFormData,dateTime);
     setMeetupFormData(INITIAL_STATE);
 
     // redirect to users meetups
+
+    //             [creator_user_id,
+    // date,
+    // time,
+    // date_time_utc,
+    // duration,
+    // location_id,
+    // description
   }
 
   const handleChange = (e) => {
@@ -79,10 +84,6 @@ export default function MeetupFormCard() {
         <Typography variant="body2" component="div">
             <form>
                 <div>
-                    {/* <label>Creator User id: </label> */}
-                    <input value={meetupFormData.creatorUserId} hidden name='creator_user_id'/>
-                </div>
-                <div>
                     <label htmlFor='date'>Date: </label>
                     <input onChange={handleChange} name='date' value={meetupFormData.date} type="date"/>  
                 </div>
@@ -96,7 +97,7 @@ export default function MeetupFormCard() {
                 </div>
                 <div>
                     <label htmlFor='location'>Location: </label>
-                    <input onChange={handleChange} name='location' value={meetupFormData.location} type="number"/>  
+                    <input onChange={handleChange} name='location_id' value={meetupFormData.location} type="number"/>  
                 </div>
                 <div>
                     <label htmlFor='description'>Description: </label>

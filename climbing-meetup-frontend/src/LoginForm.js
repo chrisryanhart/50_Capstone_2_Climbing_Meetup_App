@@ -30,7 +30,7 @@ export default function LoginFormCard() {
 
   const {login} = useContext(CountContext);
 
-  const INITIAL_STATE = {username: '', password:''};
+  const INITIAL_STATE = {username: 'testuser4', password:'test'};
 
   const [loginFormData,setLoginFormData] = useState(INITIAL_STATE);
 

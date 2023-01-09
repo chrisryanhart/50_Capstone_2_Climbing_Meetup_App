@@ -28,7 +28,7 @@ function MeetupList({type}){
     }
     if(type==='allMeetups') retrieveAllMeetups();
     if(type==='userMeetups') retrieveUserMeetups();
-  },[]);
+  },[type]);
 
   const meetupCards = meetups.map(meetup => <MeetupCard key={meetup.id} details={meetup}/>);
 

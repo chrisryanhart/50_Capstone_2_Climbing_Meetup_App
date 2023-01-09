@@ -86,6 +86,12 @@ class ClimbMeetupApi {
     return res;
 
   }
+
+  static async handleAttendee(id,attendeeDetails){
+    // join_request_status, attendee_user_id
+    let res = await this.request(`meetups/${id}/manage`,attendeeDetails,'patch');
+    return res;
+  }
 }
 
 

@@ -47,50 +47,69 @@ export default function ManageMeetupCard() {
 
   // need click handlers
 
-  const handleConfirm = (e) =>{
+  const handleConfirm = async (e) =>{
     let retrieved_attendee_id = Number(e.currentTarget.dataset.tag);
-    // call database
-    // update status of button
-    // make attendee list
-    let attendeeList = meetupDetails[0].attendees;
 
-    let updatedAttendees = attendeeList.map(attendee => {
+    let attendeeList = [...meetupDetails[0].attendees];
+    let updatedMeetupDetails = [...meetupDetails];
+
+    const updatedAttendee = {join_request_status: null, attendee_user_id:null};
+
+    let updatedAttendeeStatusList = attendeeList.map(attendee=>{
       if(attendee.attendee_user_id === retrieved_attendee_id){
         attendee.status = 'approved';
+
+        // update attendee details to for database request
+        updatedAttendee.join_request_status = 'approved';
+        updatedAttendee.attendee_user_id = retrieved_attendee_id;
+
         return attendee;
       }else{
         return attendee;
       }
     });
 
+    if(updatedAttendee.join_request_status !== null){
+      await ClimbMeetupApi.handleAttendee(meetupDetails[0].id,updatedAttendee);
+    }
 
-  
-    meetupDetails[0].attendees.length=0;
-    let newMeetupDetail = meetupDetails[0].attendee.push(updatedAttendees[0]);
-    // delete the attendee
-    console.log(meetupDetails);
-    setMeetupDetails(newMeetupDetail);
+    updatedMeetupDetails[0].attendees.length = 0;
+    updatedMeetupDetails[0].attendees = updatedAttendeeStatusList;
+
+    setMeetupDetails(updatedMeetupDetails);
     
   }
 
-  const handleDelete = (e) =>{
-    // call database
-    // update status of button
-    // delete the attendee
+  const handleDelete = async (e) =>{
     let retrieved_attendee_id = Number(e.currentTarget.dataset.tag);
-    // call database
-    // update status of button
-    // make attendee list
-    let attendeeList = meetupDetails[0].attendees;
 
-    let filteredAttendees = attendeeList.filter(attendee => attendee.attendee_user_id !== retrieved_attendee_id)
+    let attendeeList = [...meetupDetails[0].attendees];
+    let updatedMeetupDetails = [...meetupDetails];
 
-    if(filteredAttendees.length === 0){
-      setMeetupDetails(meetup => meetup[0].attendees)
+    const updatedAttendee = {join_request_status: null, attendee_user_id:null};
+
+    let updatedAttendeeStatusList = attendeeList.map(attendee=>{
+      if(attendee.attendee_user_id === retrieved_attendee_id){
+        attendee.status = 'rejected';
+
+        // update attendee details to for database request
+        updatedAttendee.join_request_status = 'rejected';
+        updatedAttendee.attendee_user_id = retrieved_attendee_id;
+
+        return attendee;
+      }else{
+        return attendee;
+      }
+    });
+
+    if(updatedAttendee.join_request_status !== null){
+      await ClimbMeetupApi.handleAttendee(meetupDetails[0].id,updatedAttendee);
     }
-    // delete the attendee
-    console.log(meetupDetails);
-    setMeetupDetails(meetup => meetup[0].attendees = filteredAttendees);
+
+    updatedMeetupDetails[0].attendees.length = 0;
+    updatedMeetupDetails[0].attendees = updatedAttendeeStatusList;
+
+    setMeetupDetails(updatedMeetupDetails);
   }
 
   const pendingArr = [];
@@ -134,13 +153,6 @@ export default function ManageMeetupCard() {
       }
     })
   }
-
-
-  // don't show creator as a pending attendee
-  // can copy the meetup list loop
-
-  // show 'approve'/'decline' buttons if pending
-  // show 'remove' button if already approved
 
 
   return (

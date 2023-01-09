@@ -229,9 +229,9 @@ class Meetup{
         const result = await db.query(
 
             `UPDATE meetups_attendees AS ma
-            SET join_request_status='test4'
+            SET join_request_status=$1
             FROM meetups AS m
-            WHERE (ma.meetup_id=$1 AND ma.attendee_user_id=$ AND m.creator_user_id=3)
+            WHERE (ma.meetup_id=$2 AND ma.attendee_user_id=$3 AND m.creator_user_id=$4)
             RETURNING ma.meetup_id, ma.attendee_user_id, ma.join_request_status, m.creator_user_id;`,
             [join_request_status,meetup_id,attendee_user_id,curr_user_id]);
         

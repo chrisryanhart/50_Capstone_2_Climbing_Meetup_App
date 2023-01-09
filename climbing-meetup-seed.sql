@@ -1297,6 +1297,13 @@ VALUES (1,2,'pending'),
 INSERT INTO meetups_attendees (meetup_id, attendee_user_id,join_request_status)
 VALUES (3,2,'approved');
 
+INSERT INTO meetups_attendees (meetup_id, attendee_user_id,join_request_status)
+VALUES (14,12,'pending');
+
+UPDATE meetups_attendees
+SET join_request_status='pending'
+WHERE attendee_user_id=12;
+
 UPDATE meetups
 SET date_time_utc='2023-01-05 17:00:00-02'
 WHERE id=2;

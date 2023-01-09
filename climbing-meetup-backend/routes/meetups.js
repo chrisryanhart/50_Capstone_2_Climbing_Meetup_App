@@ -149,7 +149,7 @@ router.delete('/:id/leave',ensureLoggedIn, async function(req,res,next){
 router.patch('/:id/manage',ensureLoggedIn, async function(req,res,next){
     try{
         let meetup_id = req.params.id;
-        const curr_user_id = user.id;
+        const curr_user_id = req.user.id;
 
         const {join_request_status,attendee_user_id} = req.body;
     

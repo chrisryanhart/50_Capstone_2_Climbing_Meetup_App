@@ -1280,14 +1280,6 @@ VALUES (1,'2023-01-05','10:00 AM',3,480,'Climb and have some beers'),
 (3,'2023-01-05','08:00 PM',2,446,'Weekly climb session');
 
 
--- CREATE TABLE meetups_attendees (
---     meetup_id INTEGER
---         REFERENCES meetups ON DELETE CASCADE,
---     attendee_user_id INTEGER
---         REFERENCES users ON DELETE CASCADE,
---     PRIMARY KEY (meetup_id, attendee_user_id)
--- );
-
 INSERT INTO meetups_attendees (meetup_id, attendee_user_id,join_request_status)
 VALUES (1,2,'pending'),
     (1,3,'approved'),
@@ -1308,13 +1300,7 @@ UPDATE meetups
 SET date_time_utc='2023-01-05 17:00:00-02'
 WHERE id=2;
 
-"2023-01-05T22:00:00.000Z"
 
 
-UPDATE meetups
-SET date_time_utc=ç
-WHERE id=3;
 
-UPDATE users
-SET name='bobby jones'
-WHERE id=5;
+

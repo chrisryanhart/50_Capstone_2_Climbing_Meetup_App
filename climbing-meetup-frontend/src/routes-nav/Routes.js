@@ -1,12 +1,12 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import MeetupFormCard from "./MeetupFormCard";
-import Home from "./Home";
-import LoginFormCard from "./LoginForm";
-import ProfileFormCard from "./ProfileFormCard";
-import ProfileCard from './ProfileCard';
-import MeetupList from "./MeetupList";
-import ManageMeetupCard from "./ManageMeetupCard";
+import MeetupFormCard from "../meetups/MeetupFormCard";
+import Home from "../homepage/Home";
+import LoginFormCard from "../auth/LoginForm";
+import ProfileFormCard from "../auth/ProfileFormCard";
+import ProfileCard from '../profiles/ProfileCard';
+import MeetupList from "../meetups/MeetupList";
+import ManageMeetupCard from "../meetups/ManageMeetupCard";
 
 
 function Routes(){

@@ -1,8 +1,8 @@
 import React, {useEffect, useState, useContext} from "react";
 import { useParams } from "react-router-dom";
 import MeetupCard from "./MeetupCard";
-import ClimbMeetupApi from "./api";
-import CountContext from "./UserContext";
+import ClimbMeetupApi from "../api";
+import CountContext from "../UserContext";
 
 
 function MeetupList({type}){

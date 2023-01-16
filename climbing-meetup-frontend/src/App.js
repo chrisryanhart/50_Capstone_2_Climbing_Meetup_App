@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { BrowserRouter } from "react-router-dom";
 // import Routes from './Routes';
-import NavBar from './NavBar';
+import NavBar from './routes-nav/NavBar';
 import './App.css';
-import NewContainer from './Container';
+import NewContainer from './containers/Container';
 import CountContext from './UserContext';
 import ClimbMeetupApi from './api';
 

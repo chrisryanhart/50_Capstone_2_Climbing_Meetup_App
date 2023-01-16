@@ -1,4 +1,5 @@
 import React, {useContext, useState} from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -28,7 +29,9 @@ const useStyles = makeStyles({
 export default function LoginFormCard() {
   const classes = useStyles();
 
-  const {login} = useContext(CountContext);
+  const history = useHistory();
+
+  const {login, currUserId} = useContext(CountContext);
 
   const INITIAL_STATE = {username: 'testuser4', password:'test'};
 
@@ -41,17 +44,12 @@ export default function LoginFormCard() {
     setLoginFormData(data => ({...data, [name]: value}));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(loginFormData);
+    let userId = await login(loginFormData);
     setLoginFormData(INITIAL_STATE);
+    history.push(`/users/${userId}/meetups`);
   }
-
-  // have state for form data
-
-  // upon submit call login func
-
-  // reset the form to initial state
 
   return (
     <Card className={classes.root}>

@@ -1,5 +1,5 @@
 import React, {useState,useEffect,useContext} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useParams, Redirect} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -31,11 +31,10 @@ export default function ManageMeetupCard() {
   const classes = useStyles();
 
   const {currUserId} = useContext(CountContext);
+
   const {id} = useParams();
-  // call database with all the meetup details
 
   const [meetupDetails, setMeetupDetails] = useState([]);
-  // const [attendeeList, setAttendee]
 
   useEffect(function fetchMeetupDetails(){
     async function retrieveMeetupDetails(){
@@ -44,6 +43,9 @@ export default function ManageMeetupCard() {
     }
     retrieveMeetupDetails();
   },[]);
+
+  if(!currUserId) return <Redirect to='/'/>;
+
 
   // need click handlers
 

@@ -1,4 +1,5 @@
 import React, {useState, useContext} from 'react';
+import { Redirect, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -27,9 +28,13 @@ const useStyles = makeStyles({
 });
 
 export default function MeetupFormCard() {
+  const {currUserId} = useContext(CountContext);
+
+
+
   const classes = useStyles();
 
-  const {currUserId} = useContext(CountContext);
+  const history = useHistory();
 
   const INITIAL_STATE = {
     date:'',
@@ -42,6 +47,7 @@ export default function MeetupFormCard() {
 
   const [meetupFormData,setMeetupFormData] = useState(INITIAL_STATE);
 
+  if(!currUserId) return <Redirect to='/'/>;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,15 +63,8 @@ export default function MeetupFormCard() {
     let res = await ClimbMeetupApi.createMeetup(meetupFormData,dateTime);
     setMeetupFormData(INITIAL_STATE);
 
-    // redirect to users meetups
-
-    //             [creator_user_id,
-    // date,
-    // time,
-    // date_time_utc,
-    // duration,
-    // location_id,
-    // description
+    history.push(`/users/${currUserId}/meetups`);
+    
   }
 
   const handleChange = (e) => {
@@ -73,6 +72,7 @@ export default function MeetupFormCard() {
 
     setMeetupFormData(data => ({...data, [name]: value}));
   }
+
 
   return (
     <Card className={classes.root}>

@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, {useContext, useEffect, useState} from 'react';
+import { Link, useParams, Redirect } from 'react-router-dom';
 import ClimbMeetupApi from '../api';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -17,6 +17,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import CountContext from "../UserContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProfileCard() {
 
+  const { currUserId } = useContext(CountContext);
+
+
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -65,6 +69,8 @@ export default function ProfileCard() {
 
   // now update the card with the user informations
   // profiles should now update based on the url params
+  if(!currUserId) return <Redirect to='/'/>;
+
 
   return (
     <Card className={classes.root} style={{margin: 'auto' }}>

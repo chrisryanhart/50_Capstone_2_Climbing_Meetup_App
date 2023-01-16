@@ -25,16 +25,16 @@ function App() {
 
   const registerUser = async (registrationData) => {
     let res = await ClimbMeetupApi.registerUser(registrationData);
-
     setToken(res.token);
     setCurrUserId(res.id);
+    return res.id;
   }
 
   const login = async (loginData) => {
-
     let res = await ClimbMeetupApi.login(loginData);
     setToken(res.token);
     setCurrUserId(res.id);
+    return res.id;
   }
 
   ClimbMeetupApi.token = token;

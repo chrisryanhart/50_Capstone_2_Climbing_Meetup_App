@@ -1,4 +1,5 @@
 import React, {useState,useContext} from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 // import CardActions from '@material-ui/core/CardActions';
@@ -29,6 +30,8 @@ export default function ProfileFormCard() {
   const classes = useStyles();
   // const bull = <span className={classes.bullet}>•</span>;
   const {registerUser} = useContext(CountContext);
+
+  const history = useHistory();
 
   const INITIAL_STATE = {
     username:'testuser5',
@@ -70,10 +73,11 @@ export default function ProfileFormCard() {
     setNewProfileFormData(data => ({...data, [name]: value}));
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    registerUser(newProfileFormData);
+    let userId = await registerUser(newProfileFormData);
     setNewProfileFormData(INITIAL_STATE);
+    history.push(`/users/${userId}`);
   }
 
   return (

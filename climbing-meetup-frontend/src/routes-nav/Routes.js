@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import MeetupFormCard from "../meetups/MeetupFormCard";
 import Home from "../homepage/Home";
 import LoginFormCard from "../auth/LoginForm";
@@ -48,6 +48,7 @@ function Routes(){
                 <Route exact path="/users/:id">
                     <ProfileCard/>
                 </Route>
+                <Redirect to="/"/>
             </Switch>
         </div>
     );

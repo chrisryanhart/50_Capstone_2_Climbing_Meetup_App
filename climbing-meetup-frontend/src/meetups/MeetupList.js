@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from "react";
-import { useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import MeetupCard from "./MeetupCard";
 import ClimbMeetupApi from "../api";
 import CountContext from "../UserContext";
@@ -7,10 +7,11 @@ import CountContext from "../UserContext";
 
 function MeetupList({type}){
 
+  const { currUserId } = useContext(CountContext);
+
+
   const {id} = useParams();
 
-  const { currUserId } = useContext(CountContext);
-    
   const [meetups,setMeetups] = useState([]);
 
   // save the users url in their profile 
@@ -29,6 +30,8 @@ function MeetupList({type}){
     if(type==='allMeetups') retrieveAllMeetups();
     if(type==='userMeetups') retrieveUserMeetups();
   },[type]);
+
+  if(!currUserId) return <Redirect to='/'/>;
 
   const meetupCards = meetups.map(meetup => <MeetupCard key={meetup.id} details={meetup}/>);
 

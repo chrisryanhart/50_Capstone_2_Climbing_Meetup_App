@@ -18,6 +18,8 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(morgan("tiny"));
 
+app.use('/', authentication);
+
 
 app.use(authenticateJWT);
 
@@ -25,7 +27,6 @@ app.use(authenticateJWT);
 
 // confirm user authentication before accessing protected routes
 
-app.use('/', authentication);
 
 app.use('/users', users);
 app.use('/meetups', meetups);

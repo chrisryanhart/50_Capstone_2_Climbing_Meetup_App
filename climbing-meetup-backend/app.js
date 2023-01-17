@@ -1,3 +1,4 @@
+// test
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -10,18 +11,23 @@ const {authenticateJWT} = require('./middleware/authorization');
 
 const app = express();
 
+
+
 app.use(cors());
 // parse json
 app.use(express.json());
-// parse form data
-app.use(express.urlencoded({extended: true}));
 
 app.use(morgan("tiny"));
+
+app.use(authenticateJWT);
+
+app.use(express.urlencoded({extended: true}));
+
+
 
 app.use('/', authentication);
 
 
-app.use(authenticateJWT);
 
 // allow user to register or login without token
 

@@ -1,18 +1,24 @@
 // pg allows us to establish a connection with the db and run SQL commands
 const { Client } = require("pg");
+const { getDatabaseUri } = require('./config');
 
-let DB_URI;
+
 console.log('ENV Vars: ',process.env.NODE_ENV);
 
-if (process.env.NODE_ENV === "test") {
-  DB_URI = "postgresql:///climbing_meetup_test";
-} else {
-  DB_URI = "postgresql:///climbing_meetup";
-}
+let db;
 
-let db = new Client({
-  connectionString: DB_URI
-});
+if (process.env.NODE_ENV === "production") {
+  db = new Client({
+    connectionString: getDatabaseUri(),
+    ssl: {
+      rejectUnauthorized: false
+    }
+  });
+} else {
+  db = new Client({
+    connectionString: getDatabaseUri()
+  });
+}
 
 db.connect();
 

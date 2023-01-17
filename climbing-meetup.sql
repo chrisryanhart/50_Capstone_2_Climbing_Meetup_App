@@ -7,4 +7,3 @@ CREATE DATABASE climbing_meetup;
 
 \i climbing-meetup-schema.sql
 \i climbing-meetup-seed.sql
-

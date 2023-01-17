@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useHistory } from "react-router-dom";
 // import Routes from './Routes';
 import NavBar from './routes-nav/NavBar';
 import './App.css';
@@ -8,9 +8,9 @@ import CountContext from './UserContext';
 import ClimbMeetupApi from './api';
 
 function App() {
-  // const INITIAL_TOKEN_STATE = "";
-  // pass handleLogin down to context
-  // execute handleLogin in the LoginForm component upon form submission
+
+  const history = useHistory();
+
   const [token,setToken] = useState(()=>{
     if(window.localStorage.getItem('token') === ''){
       return '';
@@ -56,13 +56,18 @@ function App() {
     return res.id;
   }
 
+  const logout = () => {
+    setToken('');
+    history.push('/');
+  }
+
   ClimbMeetupApi.token = token;
 
   return (
     <div className="App">
       <BrowserRouter>
         {/* <ResponsiveAppBar/> */}
-        <CountContext.Provider value={{token, userMeetups, currUserId,login,registerUser}}>
+        <CountContext.Provider value={{token, userMeetups, currUserId,login,registerUser, logout}}>
           <NavBar/>
           <NewContainer/>
           {/* <Routes/> */}

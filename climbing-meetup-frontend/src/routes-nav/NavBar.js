@@ -50,7 +50,7 @@ function NavBar(props) {
     setAnchorEl(null);
   };
 
-  const {currUserId, token} = useContext(CountContext);
+  const {currUserId, token, logout} = useContext(CountContext);
 
   // const [collapsed, setCollapsed] = useState(true);
 
@@ -61,7 +61,7 @@ function NavBar(props) {
       <AppBar position="static">
         <Toolbar>
           <div>
-            <IconButton edge="start" 
+            {token && <IconButton edge="start" 
             className={classes.menuButton} 
             color="inherit" 
             aria-label="menu"
@@ -70,7 +70,7 @@ function NavBar(props) {
             onClick={handleMenu}
             >
               <MenuIcon />
-            </IconButton>
+            </IconButton>}
             <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}
@@ -86,24 +86,24 @@ function NavBar(props) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>
+                {/* <MenuItem onClick={handleClose}>
                   <Link to="/">Home</Link> 
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
+                </MenuItem> */}
+                {!token && <MenuItem onClick={handleClose}>
                   <Link to="/login">Login</Link> 
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
+                </MenuItem>}
+                {!token && <MenuItem onClick={handleClose}>
                   <Link to="/register">Register</Link> 
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <Link to="/meetups">See Meetups</Link> 
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <Link to="/meetups/new">Make New Meetup</Link> 
-                </MenuItem>
+                </MenuItem>}
                 <MenuItem onClick={handleClose}>
                   {/* this should be from user */}
                   <Link to={`/users/${currUserId}`}>My Profile</Link> 
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link to="/meetups">All Meetups</Link> 
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link to="/meetups/new">Make New Meetup</Link> 
                 </MenuItem>
             </Menu>
 
@@ -111,7 +111,7 @@ function NavBar(props) {
           <Typography variant="h6" className={classes.title}>
             Climbing Meetup
           </Typography>
-          <Button color="inherit">Login</Button>
+          {token && <Button onClick={logout} color="inherit">Logout</Button>}
         </Toolbar>
       </AppBar>
     </div>

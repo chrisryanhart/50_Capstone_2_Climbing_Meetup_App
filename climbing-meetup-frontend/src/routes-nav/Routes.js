@@ -20,6 +20,9 @@ function Routes(){
                 <Route exact path="/login">
                     <LoginFormCard/>
                 </Route>
+                <Route exact path="/logout">
+                    
+                </Route>
                 <Route exact path="/register">
                     <ProfileFormCard/>
                 </Route>

@@ -48,7 +48,7 @@ function App() {
     setCurrUserId(res.id);
     return res.id;
   }
-
+  // test update
   const login = async (loginData) => {
     let res = await ClimbMeetupApi.login(loginData);
     setToken(res.token);

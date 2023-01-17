@@ -1252,9 +1252,9 @@ INSERT INTO users (username,
                     has_dogs, 
                     bio, 
                     location_id)
-VALUES ('testuser1','test','spider man',32,'Male',TRUE,FALSE,'Best climber ever',446),
-    ('testuser2','test','wonder woman',46,'Female',FALSE,TRUE,'Trad is rad',446),
-    ('testuser3','test','batman',25,'Male',TRUE,FALSE,'Professional urban climber',480);
+VALUES ('testuser1','$2b$12$ONysXGFEW82U89CRoeXmcev0uGDEEVFabaL3cnoSSe0ceLVkRzAiK','spider man',32,'Male',TRUE,FALSE,'Best climber ever',446),
+    ('testuser2','$2b$12$ONysXGFEW82U89CRoeXmcev0uGDEEVFabaL3cnoSSe0ceLVkRzAiK','wonder woman',46,'Female',FALSE,TRUE,'Trad is rad',446),
+    ('testuser3','$2b$12$ONysXGFEW82U89CRoeXmcev0uGDEEVFabaL3cnoSSe0ceLVkRzAiK','batman',25,'Male',TRUE,FALSE,'Professional urban climber',480);
 
 
 -- CREATE TABLE meetups (
@@ -1296,9 +1296,9 @@ UPDATE meetups_attendees
 SET join_request_status='pending'
 WHERE attendee_user_id=12;
 
-UPDATE meetups
-SET date_time_utc='2023-01-05 17:00:00-02'
-WHERE id=2;
+-- UPDATE meetups
+-- SET date_time_utc='2023-01-05 17:00:00-02'
+-- WHERE id=2;
 
 
 

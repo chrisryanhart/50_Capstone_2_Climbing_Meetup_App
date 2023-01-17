@@ -50,7 +50,7 @@ function NavBar(props) {
     setAnchorEl(null);
   };
 
-  const {currUserId} = useContext(CountContext);
+  const {currUserId, token} = useContext(CountContext);
 
   // const [collapsed, setCollapsed] = useState(true);
 

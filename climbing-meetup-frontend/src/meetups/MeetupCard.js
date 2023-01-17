@@ -32,45 +32,55 @@ export default function MeetupCard({details}) {
 
   const {userMeetups, currUserId} = useContext(CountContext);
 
+  const currUserIdInt = Number(currUserId);
+
   // check is the current user created the meetup
-  const isCreator = currUserId === details.creator_user_id ? true : false;
+  const isCreator = currUserIdInt === details.creator_user_id ? true : false;
 
   // const attendeeList = details.attendees;
   const [attendeeList, setAttendeeList] = useState(details.attendees);
+  // const [attendees, setAttendees] = useState([]);
+  // const attendeeStatus = {status: ''};
+  // const INITIAL_ATTENDEE_STATUS = {status: ''};
+  // const [attendeeStatus, setAttendeeStatus] = useState(INITIAL_ATTENDEE_STATUS);
+
   const attendeeStatus = {status: ''};
 
-  // get list of attendee elements to display
   const attendees = attendeeList.map(attendee =>{
 
-      if(!isCreator){
-        if(currUserId === attendee.id){
-          attendeeStatus.status = attendee.status;
-        }
+    if(!isCreator){
+      if(currUserIdInt === attendee.id){
+        attendeeStatus.status = attendee.status;
       }
+    }
 
-      if(attendee.status==='approved'){
-        return (
-        <div >
-          <Link to={`users/${attendee.id}`}>
-              <div style={{display: 'flex'}}>
-                <Avatar 
-                        alt="Spider Monkey" 
-                        src="https://firebasestorage.googleapis.com/v0/b/climbing-meetup-app.appspot.com/o/sean-benesh-VnmbcgAfL3Q-unsplash.jpg?alt=media&token=9f5685b0-3529-40c3-98d2-5b54b1b09825"
-                        />
-                <Typography variant="body2" style={{marginLeft: '10px',marginTop: '10px',alignItems: 'center'}}>
-                    {attendee.name}
-                    <br/>
-                </Typography>
-              </div>
-          </Link>
+    if(attendee.status==='approved'){
+      return (
+      <div >
+        <Link to={`users/${attendee.id}`}>
+            <div style={{display: 'flex'}}>
+              <Avatar 
+                      alt="Spider Monkey" 
+                      src="https://firebasestorage.googleapis.com/v0/b/climbing-meetup-app.appspot.com/o/sean-benesh-VnmbcgAfL3Q-unsplash.jpg?alt=media&token=9f5685b0-3529-40c3-98d2-5b54b1b09825"
+                      />
+              <Typography variant="body2" style={{marginLeft: '10px',marginTop: '10px',alignItems: 'center'}}>
+                  {attendee.name}
+                  <br/>
+              </Typography>
+            </div>
+        </Link>
 
-        </div>);
-        }
-  });
+      </div>);
+      }
+});
+
+
+  // get list of attendee elements to display
+   
 
   // set initial meetupJoinStatus after checking is user is in the attendee list
   const [meetupJoinStatus, setMeetupJoinStatus] = useState(attendeeStatus.status);
-  const [pageLoaded, setPageLoaded] = useState(false);
+  // const [pageLoaded, setPageLoaded] = useState(false);
 
     const handleJoin = async () => {
       let res = await ClimbMeetupApi.joinMeetup(details.id);

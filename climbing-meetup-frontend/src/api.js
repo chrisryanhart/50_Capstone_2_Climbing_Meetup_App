@@ -21,8 +21,7 @@ class ClimbMeetupApi {
     //there are multiple ways to pass an authorization token, this is how you pass it in the header.
     //this has been provided to show you another way to pass the token. you are only expected to read this code for this project.
     const url = `${BASE_URL}/${endpoint}`;
-    // `Bearer ${ClimbMeetupApi.token}`
-    const headers = { 'Authorization': `${ClimbMeetupApi.token}` };
+    const headers = { 'Authorization': `${ClimbMeetupApi.token}`};
     const params = (method === "get")
         ? data
         : {};
@@ -30,6 +29,7 @@ class ClimbMeetupApi {
     try {
       return (await axios({ url, method, data, params, headers })).data;
     } catch (err) {
+      console.log(err);
       console.error("API Error:", err.response);
       let message = err.response.data.error.message;
       throw Array.isArray(message) ? message : [message];

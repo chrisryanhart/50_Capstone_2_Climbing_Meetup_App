@@ -8,12 +8,30 @@ import CountContext from './UserContext';
 import ClimbMeetupApi from './api';
 
 function App() {
-  const INITIAL_TOKEN_STATE = "";
+  // const INITIAL_TOKEN_STATE = "";
   // pass handleLogin down to context
   // execute handleLogin in the LoginForm component upon form submission
-  const [token,setToken] = useState(INITIAL_TOKEN_STATE);
+  const [token,setToken] = useState(()=>{
+    if(window.localStorage.getItem('token') === ''){
+      return '';
+    }else{
+      return window.localStorage.getItem('token');
+    }
+  });
+  const [currUserId,setCurrUserId] = useState(()=>{
+    if(window.localStorage.getItem('userId') === null){
+      return null;
+    }else{
+      return window.localStorage.getItem('userId');
+    }
+  });
   const [userMeetups,setUserMeetups] = useState([]);
-  const [currUserId,setCurrUserId] = useState(null);
+  // const [currUserId,setCurrUserId] = useState(null);
+
+  useEffect(()=>{
+    window.localStorage.setItem('userId',currUserId);
+    window.localStorage.setItem('token',token);
+  },[token, currUserId])
 
   // useEffect(function fetchProfile(){
   //   async function retrieveProfile(){
@@ -25,6 +43,7 @@ function App() {
 
   const registerUser = async (registrationData) => {
     let res = await ClimbMeetupApi.registerUser(registrationData);
+    // let tokenJsonFormat = JSON.stringify(res.token)
     setToken(res.token);
     setCurrUserId(res.id);
     return res.id;

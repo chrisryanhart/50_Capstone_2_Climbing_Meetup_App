@@ -7,7 +7,7 @@ import CountContext from "../UserContext";
 
 function MeetupList({type}){
 
-  const { currUserId } = useContext(CountContext);
+  const { currUserId, token } = useContext(CountContext);
 
 
   const {id} = useParams();
@@ -31,7 +31,9 @@ function MeetupList({type}){
     if(type==='userMeetups') retrieveUserMeetups();
   },[type]);
 
-  if(!currUserId) return <Redirect to='/'/>;
+  if(!token){
+    return <Redirect to='/'/>;
+  } 
 
   const meetupCards = meetups.map(meetup => <MeetupCard key={meetup.id} details={meetup}/>);
 

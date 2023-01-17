@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 export default function ManageMeetupCard() {
   const classes = useStyles();
 
-  const {currUserId} = useContext(CountContext);
+  const {currUserId, token} = useContext(CountContext);
 
   const {id} = useParams();
 
@@ -44,7 +44,7 @@ export default function ManageMeetupCard() {
     retrieveMeetupDetails();
   },[]);
 
-  if(!currUserId) return <Redirect to='/'/>;
+  if(!token) return <Redirect to='/'/>;
 
 
   // need click handlers

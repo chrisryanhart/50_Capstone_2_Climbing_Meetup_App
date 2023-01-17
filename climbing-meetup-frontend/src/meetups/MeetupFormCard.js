@@ -28,9 +28,7 @@ const useStyles = makeStyles({
 });
 
 export default function MeetupFormCard() {
-  const {currUserId} = useContext(CountContext);
-
-
+  const {currUserId, token} = useContext(CountContext);
 
   const classes = useStyles();
 
@@ -47,7 +45,7 @@ export default function MeetupFormCard() {
 
   const [meetupFormData,setMeetupFormData] = useState(INITIAL_STATE);
 
-  if(!currUserId) return <Redirect to='/'/>;
+  if(!token) return <Redirect to='/'/>;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

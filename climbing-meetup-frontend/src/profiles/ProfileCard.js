@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProfileCard() {
 
-  const { currUserId } = useContext(CountContext);
+  const { currUserId, token } = useContext(CountContext);
 
 
   const classes = useStyles();
@@ -69,7 +69,7 @@ export default function ProfileCard() {
 
   // now update the card with the user informations
   // profiles should now update based on the url params
-  if(!currUserId) return <Redirect to='/'/>;
+  if(!token) return <Redirect to='/'/>;
 
 
   return (

@@ -79,6 +79,10 @@ export default function MeetupFormCard() {
           New Meetup Form
         </Typography>
 
+        <Typography variant="h5" component="h2">
+          Error: 
+        </Typography>
+
         <Typography variant="body2" component="div">
             <form>
                 <div>

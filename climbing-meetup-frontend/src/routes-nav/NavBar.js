@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -35,7 +35,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function NavBar(props) {
-  const classes = useStyles();;
+  const classes = useStyles();
+  const history = useHistory();
 
   // const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -55,6 +56,12 @@ function NavBar(props) {
   // const [collapsed, setCollapsed] = useState(true);
 
   // const toggleNavbar = () => setCollapsed(!collapsed);
+
+
+  const handleClick = () => {
+    logout();
+    history.push('/');
+  }
 
   return (
     <div className={classes.root}>
@@ -111,7 +118,7 @@ function NavBar(props) {
           <Typography variant="h6" className={classes.title}>
             Climbing Meetup
           </Typography>
-          {token && <Button onClick={logout} color="inherit">Logout</Button>}
+          {token && <Button onClick={handleClick} color="inherit">Logout</Button>}
         </Toolbar>
       </AppBar>
     </div>

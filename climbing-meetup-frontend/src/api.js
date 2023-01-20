@@ -25,13 +25,16 @@ class ClimbMeetupApi {
       return (await axios({ url, method, data, params, headers })).data;
     } catch (err) {
       console.log(err);
-      let anotherError = err.response;
+      let anotherError = err.response.data;
       console.error("API Error:", err.response);
       let message = err.response.data.error.message;
 
+      throw anotherError;
+
       // return anotherError;
       // throw Error
-      return anotherError;
+      // return anotherError;
+
       throw Array.isArray(message) ? message : [message];
       
     }
@@ -82,10 +85,12 @@ class ClimbMeetupApi {
       let res = await this.request('register',registrationData,'post');
       return res;
     }catch(err){
+      console.log('INSIDE REGISTER USER CATCH!!!!!');
       console.log(err);
       let myError = err.response;
       console.log('Heres my error:',err);
-      return err.response;
+      // return err.response;
+      throw err;
     }
 
   }

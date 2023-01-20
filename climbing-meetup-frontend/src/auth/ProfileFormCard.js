@@ -45,7 +45,8 @@ export default function ProfileFormCard() {
     bio:'I like big jugs'
   }
 
-
+  const [hasError, sethasError] = useState(false);
+  const [errorMessage,setErrorMessage] = useState('');
   const [newProfileFormData, setNewProfileFormData] = useState(INITIAL_STATE);
 
   const handleCheckboxChange = (e) => {
@@ -75,9 +76,19 @@ export default function ProfileFormCard() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let userId = await registerUser(newProfileFormData);
-    setNewProfileFormData(INITIAL_STATE);
-    history.push(`/users/${userId}`);
+    let res = await registerUser(newProfileFormData);
+
+    if(es){
+        sethasError(true);
+        setErrorMessage(res.data.error.message);
+    }else{
+      // if no error
+      setNewProfileFormData(INITIAL_STATE);
+      history.push(`/users/${res}`);
+      // else setHasErrors
+    }
+
+
   }
 
   return (
@@ -86,6 +97,12 @@ export default function ProfileFormCard() {
         <Typography variant="h5" component="h2">
           Complete New Profile Form:
         </Typography>
+
+        {hasError && <Typography style={{backgroundColor:'red'}}  variant="h6" component="h2">
+            <p style={{color:'white'}}><b>Error: {errorMessage}</b></p>
+        </Typography>}
+
+
 
         <Typography variant="body2" component="div">
             <form>

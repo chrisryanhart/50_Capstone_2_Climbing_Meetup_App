@@ -12,7 +12,7 @@ function App() {
   const history = useHistory();
 
   const [token,setToken] = useState(()=>{
-    if(window.localStorage.getItem('token') === ''){
+    if(!window.localStorage.getItem('token')){
       return '';
     }else{
       return window.localStorage.getItem('token');
@@ -42,23 +42,32 @@ function App() {
   // },[]);
 
   const registerUser = async (registrationData) => {
-    let res = await ClimbMeetupApi.registerUser(registrationData);
-    // let tokenJsonFormat = JSON.stringify(res.token)
-    setToken(res.token);
-    setCurrUserId(res.id);
-    return res.id;
+    try{
+      let res = await ClimbMeetupApi.registerUser(registrationData);
+      // let tokenJsonFormat = JSON.stringify(res.token)
+  
+      window.localStorage.setItem('token',res.token);
+      setToken(res.token);
+      setCurrUserId(res.id);
+      return res.id;
+    }catch(err){
+      return err;
+    }
+
   }
+  
   // test update
   const login = async (loginData) => {
     let res = await ClimbMeetupApi.login(loginData);
+    window.localStorage.setItem('token',res.token);
     setToken(res.token);
     setCurrUserId(res.id);
     return res.id;
   }
 
   const logout = () => {
+    window.localStorage.removeItem('token');
     setToken('');
-    history.push('/');
   }
 
   ClimbMeetupApi.token = token;

@@ -7,6 +7,7 @@ import ProfileFormCard from "../auth/ProfileFormCard";
 import ProfileCard from '../profiles/ProfileCard';
 import MeetupList from "../meetups/MeetupList";
 import ManageMeetupCard from "../meetups/ManageMeetupCard";
+import PastFutureMeetupsTab from "../meetups/PastFutureMeetupTab";
 
 
 function Routes(){
@@ -30,7 +31,8 @@ function Routes(){
                     <MeetupFormCard/>
                 </Route>
                 <Route exact path="/meetups">
-                    <MeetupList type='allMeetups'/>
+                    <PastFutureMeetupsTab type='allMeetups'/>
+                    {/* <MeetupList type='allMeetups'/> */}
                 </Route>
                 <Route exact path="/meetups/:id/manage">
                     <ManageMeetupCard/>
@@ -43,7 +45,8 @@ function Routes(){
                 </Route>
 
                 <Route exact path="/users/:id/meetups">
-                    <MeetupList type='userMeetups'/>
+                    <PastFutureMeetupsTab type='userMeetups'/>
+                    {/* <MeetupList type='userMeetups'/> */}
                 </Route>
                 <Route exact path="/users/:id/edit">
 

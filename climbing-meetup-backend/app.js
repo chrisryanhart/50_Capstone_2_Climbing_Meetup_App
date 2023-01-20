@@ -12,9 +12,8 @@ const {authenticateJWT} = require('./middleware/authorization');
 const app = express();
 
 
-
 app.use(cors());
-// parse json
+
 app.use(express.json());
 
 app.use(morgan("tiny"));

@@ -75,9 +75,6 @@ export default function MeetupCard({details}) {
 });
 
 
-  // get list of attendee elements to display
-   
-
   // set initial meetupJoinStatus after checking is user is in the attendee list
   const [meetupJoinStatus, setMeetupJoinStatus] = useState(attendeeStatus.status);
   // const [pageLoaded, setPageLoaded] = useState(false);
@@ -119,7 +116,6 @@ export default function MeetupCard({details}) {
   // const rawDate = new Date(details.utc_date_time);
   // const date = rawDate.toLocaleDateString('en-US');
   // const time = rawDate.toLocaleTimeString('en-US')
-
 
   return (
     <Card className={classes.root} style={{ marginTop: '10px'}}>

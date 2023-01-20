@@ -4,11 +4,6 @@ import token from './App';
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 /** API Class.
- *
- * Static class tying together methods used to get/send to to the API.
- * There shouldn't be any frontend-specific stuff here, and there shouldn't
- * be any API-aware stuff elsewhere in the frontend.
- *
  */
 
 class ClimbMeetupApi {
@@ -30,9 +25,15 @@ class ClimbMeetupApi {
       return (await axios({ url, method, data, params, headers })).data;
     } catch (err) {
       console.log(err);
+      let anotherError = err.response;
       console.error("API Error:", err.response);
       let message = err.response.data.error.message;
+
+      // return anotherError;
+      // throw Error
+      return anotherError;
       throw Array.isArray(message) ? message : [message];
+      
     }
   }
 
@@ -77,8 +78,16 @@ class ClimbMeetupApi {
     return res;
   }
   static async registerUser(registrationData){
-    let res = await this.request('register',registrationData,'post');
-    return res;
+    try{
+      let res = await this.request('register',registrationData,'post');
+      return res;
+    }catch(err){
+      console.log(err);
+      let myError = err.response;
+      console.log('Heres my error:',err);
+      return err.response;
+    }
+
   }
   static async createMeetup(meetupData,formattedDateTime){
     meetupData['date_time_utc']=formattedDateTime;

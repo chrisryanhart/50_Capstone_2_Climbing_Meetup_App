@@ -3,6 +3,7 @@ import { Redirect, useParams } from "react-router-dom";
 import MeetupCard from "./MeetupCard";
 import ClimbMeetupApi from "../api";
 import CountContext from "../UserContext";
+import PastFutureMeetupsTab from "./PastFutureMeetupTab";
 
 
 function MeetupList({type}){
@@ -35,7 +36,25 @@ function MeetupList({type}){
     return <Redirect to='/'/>;
   } 
 
-  const meetupCards = meetups.map(meetup => <MeetupCard key={meetup.id} details={meetup}/>);
+  // depending on tab state, one or the other will be shown
+
+  let pastMeetups = [];
+  let futureMeetups = [];
+
+  // use a standard for loop instead of map
+  const meetupCards = meetups.map(meetup =>{
+    let isPast;
+    let currentDateTime = Date.now();
+    let meetingDateTime = Date.parse(meetup.date);
+
+    if(currentDateTime < meetingDateTime){
+      isPast = false;
+      futureMeetups.push(meetup);
+    }else{
+      pastMeetups.push(meetup);
+    }
+    return (<MeetupCard key={meetup.id} details={meetup} isPast={isPast}/>);
+  });
 
 // loop through meetups
 // render MeetupCards
@@ -46,6 +65,8 @@ function MeetupList({type}){
 
   return (
         <div>
+          {/* Add place for tabs */}
+          {/* <PastFutureMeetupsTab meetupCards={{meetupCards}}/> */}
           {meetupCards}
         </div>
     );

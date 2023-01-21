@@ -37,11 +37,11 @@ export default function ProfileFormCard() {
     username:'testuser5',
     password:'test',
     name:'spongebob',
-    profile_image:'hlkjfghlsjkdhfgklj',
-    user_age:44,
-    user_gender:'male',
+    profile_image:'imagePlaceholder',
+    user_age: 44,
+    user_gender:'',
     is_parent: false,
-    location_id:480,
+    location_id: 466,
     bio:'I like big jugs'
   }
 
@@ -66,6 +66,12 @@ export default function ProfileFormCard() {
   //     }
   //   }
   // });
+  const handleGenderChange = (e) => {
+    const {value} = e.target;
+
+    setNewProfileFormData(data => ({...data, 'user_gender': value}));
+  }
+
 
   const handleChange = (e) => {
     // e.preventDefault();
@@ -76,20 +82,24 @@ export default function ProfileFormCard() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(newProfileFormData.user_age === ''){
+      sethasError(true);
+      setErrorMessage('Age input required');
+      return;
+    }
     let res = await registerUser(newProfileFormData);
 
-    if(es){
-        sethasError(true);
-        setErrorMessage(res.data.error.message);
-    }else{
-      // if no error
+    // if type error key doesn't exist, registration was successful
+    if(typeof(res.error)==='undefined'){
       setNewProfileFormData(INITIAL_STATE);
       history.push(`/users/${res}`);
-      // else setHasErrors
+    }else{
+      // if error exists
+      sethasError(true);
+      setErrorMessage(res.error.message);
     }
-
-
   }
+  console.log(newProfileFormData.user_gender);
 
   return (
     <Card className={classes.root}>
@@ -102,11 +112,8 @@ export default function ProfileFormCard() {
             <p style={{color:'white'}}><b>Error: {errorMessage}</b></p>
         </Typography>}
 
-
-
         <Typography variant="body2" component="div">
             <form>
-
                 <div>
                     <label htmlFor='username'>Username: </label>
                     <input onChange={handleChange} name='username' value={newProfileFormData.username}/>
@@ -119,32 +126,29 @@ export default function ProfileFormCard() {
                     <label htmlFor='name'>Name: </label>
                     <input onChange={handleChange} name='name' value={newProfileFormData.name}/>  
                 </div>
-                <div>
-                    <label htmlFor='profile_image'>Profile Image: </label>
-                    <input onChange={handleChange} name='profile_image' value={newProfileFormData.profile_image}/>  
-                </div>
-                <div>
+
                     <label htmlFor='user_age'>Age: </label>
                     <input type="number" onChange={handleChange} name='user_age' value={newProfileFormData.user_age}/>  
-                </div>
                 <div> 
                     <label htmlFor='is_parent'>Parent: </label>
                     <input type="checkbox" checked={newProfileFormData.is_parent} id='is_parent' onChange={handleCheckboxChange} name='is_parent' />  
 
                 </div>
                 <div>
-                    <label htmlFor='user_gender'>Gender: </label>
-                    <input onChange={handleChange} name='user_gender' value={newProfileFormData.user_gender}/>  
+                    <label>Gender: </label>
+                    <input type="radio" onChange={handleGenderChange} name='user_gender' value="male"/>  
+                    <label className='radio' htmlFor='user_gender'>Male </label>
+                    <input type="radio" onChange={handleGenderChange} name='user_gender' value="female"/>  
+                    <label className='radio' htmlFor='user_gender'>Female </label>
+                    <input type="radio" onChange={handleGenderChange} name='user_gender' value="nonbinary"/>  
+                    <label className='radio' htmlFor='user_gender'>Non-Binary </label>  
                 </div>
-                <div>
-                    <label htmlFor='location_id'>Location: </label>
-                    <input onChange={handleChange} name='location_id' type="number" value={newProfileFormData.location_id}/>  
-                </div>
+
                 <div>
                     <label htmlFor='bio'>Bio: </label>
                     <textarea onChange={handleChange} name='bio' value={newProfileFormData.bio}></textarea>  
                 </div>
-                <Button onClick={handleSubmit} variant='contained'>Submit</Button>
+                <Button type='submit' onClick={handleSubmit} variant='contained'>Submit</Button>
             </form>
         </Typography>
       </CardContent>

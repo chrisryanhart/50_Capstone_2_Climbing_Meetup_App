@@ -17,6 +17,16 @@ const router = new express.Router();
 // return the token (with the id and username)
 router.post('/register', async function(req,res,next){
     try{
+
+        let ageType = Number(req.body.user_age);
+        if(Object.is(ageType,NaN)){
+            let invalidInputError = new BadRequestError('User age must be a number');
+            return next(invalidInputError)
+        }
+        req.body.user_age = Number(req.body.user_age);
+
+
+        // convert strings to numbers
         const verifiedProfileData = jsonschema.validate(req.body,profileFormSchema);
 
         if(!verifiedProfileData.valid){

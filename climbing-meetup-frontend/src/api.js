@@ -62,8 +62,14 @@ class ClimbMeetupApi {
   }
 
   static async getUser(id){
-    let res = await this.request(`users/${id}`);
-    return res;
+    try{
+      let res = await this.request(`users/${id}`);
+      return res;
+    }catch(err){
+      console.log('Heres my error:',err);
+      return err;
+    }
+
   }
 
   static async joinMeetup(meetup_id){

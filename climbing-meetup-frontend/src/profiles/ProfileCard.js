@@ -57,19 +57,26 @@ export default function ProfileCard() {
   // retrieve user profile
   const { id } = useParams();
 
+  const [hasError,setHasError] = useState(false);
   const [userProfile, setUserProfile] = useState([]);
 
   useEffect(function fetchUserProfile(){
     async function retrieveUserProfile(){
       let res = await ClimbMeetupApi.getUser(id);
-      setUserProfile(res);
-    }
+
+      if(typeof(res.error)==='undefined'){
+        setUserProfile(res);
+      }else{
+        alert('User does not exist!');
+        setHasError(true);
+      }
+    }      
     retrieveUserProfile();
   },[]);
 
-  // now update the card with the user informations
-  // profiles should now update based on the url params
+
   if(!token) return <Redirect to='/'/>;
+  if(hasError) return <Redirect to="/meetups" />; 
 
 
   return (

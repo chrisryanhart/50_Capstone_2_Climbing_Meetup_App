@@ -76,7 +76,7 @@ export default function ProfileCard() {
     <Card className={classes.root} style={{margin: 'auto' }}>
       <CardHeader
         title={userProfile.name}
-        subheader="Climbing, Bouldering"
+        // subheader="Climbing, Bouldering"
       />
       <CardMedia
         className={classes.media}
@@ -94,12 +94,12 @@ export default function ProfileCard() {
         <Typography variant="body2" color="textSecondary" component="p">
           <b>Age:</b> {userProfile.user_age}
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+        {userProfile.user_gender && <Typography variant="body2" color="textSecondary" component="p">
           <b>Gender:</b> {userProfile.user_gender}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+        </Typography>}
+        {/* <Typography variant="body2" color="textSecondary" component="p">
           <b>Belay Experience:</b> High
-        </Typography>
+        </Typography> */}
         <Typography variant="body2" component="p">
           <Link to={`/users/${id}/meetups`}><b>See My Meetups</b></Link>
         </Typography>

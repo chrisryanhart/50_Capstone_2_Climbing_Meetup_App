@@ -35,6 +35,8 @@ export default function LoginFormCard() {
 
   const INITIAL_STATE = {username: 'testuser4', password:'test'};
 
+  const [hasError, sethasError] = useState(false);
+  const [errorMessage,setErrorMessage] = useState('');
   const [loginFormData,setLoginFormData] = useState(INITIAL_STATE);
 
   const handleUpdate = (e) => {
@@ -46,9 +48,16 @@ export default function LoginFormCard() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let userId = await login(loginFormData);
-    setLoginFormData(INITIAL_STATE);
-    history.push(`/users/${userId}/meetups`);
+
+    let res = await login(loginFormData);
+
+    if(typeof(res.error)==='undefined'){
+      setLoginFormData(INITIAL_STATE);
+      history.push(`/users/${res}/meetups`);
+    }else{
+      sethasError(true);
+      setErrorMessage(res.error.message);
+    }
   }
 
   return (
@@ -57,7 +66,9 @@ export default function LoginFormCard() {
         <Typography variant="h5" component="h2">
           Login to your account:
         </Typography>
-
+        {hasError && <Typography style={{backgroundColor:'red'}}  variant="h6" component="h2">
+            <p style={{color:'white'}}><b>Error: {errorMessage}</b></p>
+        </Typography>}
 
         <Typography variant="body2" component="div">
             <form >

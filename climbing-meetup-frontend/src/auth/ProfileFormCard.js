@@ -58,14 +58,6 @@ export default function ProfileFormCard() {
 
   }
 
-  // setNewProfileFormData(data => {
-  //   for(const [key,val] of Object.entries(data)){
-  //     if(key===name){
-  //       const test = {...data,[key]: !data.val}
-  //       setNewProfileFormData({...data, [key]: !data[key]});
-  //     }
-  //   }
-  // });
   const handleGenderChange = (e) => {
     const {value} = e.target;
 

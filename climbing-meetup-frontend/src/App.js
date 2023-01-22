@@ -58,11 +58,16 @@ function App() {
   
   // test update
   const login = async (loginData) => {
-    let res = await ClimbMeetupApi.login(loginData);
-    window.localStorage.setItem('token',res.token);
-    setToken(res.token);
-    setCurrUserId(res.id);
-    return res.id;
+    try{
+      let res = await ClimbMeetupApi.login(loginData);
+      window.localStorage.setItem('token',res.token);
+      setToken(res.token);
+      setCurrUserId(res.id);
+      return res.id;
+    }catch(err){
+      return err;
+    }
+
   }
 
   const logout = () => {

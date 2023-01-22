@@ -45,13 +45,20 @@ router.get('/:id',ensureLoggedIn, async function(req,res,next){
 // create new meetup 
 router.post('/new',ensureLoggedIn, async function(req,res,next){
     try{
+        let durationType = Number(req.body.duration);
+        if(Object.is(durationType,NaN)){
+            let invalidInputError = new BadRequestError('Duration must be at least 1');
+            return next(invalidInputError)
+        }
+        req.body.duration = Number(req.body.duration);
+
         const verifiedMeetupData = jsonschema.validate(req.body,meetupFormSchema);
 
-        // if(!verifiedMeetupData.valid){
-        //     let listOfErrors = verifiedMeetupData.errors.map(err => err.stack);
-        //     let newError = new BadRequestError(listOfErrors);
-        //     return next(newError);
-        // }
+        if(!verifiedMeetupData.valid){
+            let listOfErrors = verifiedMeetupData.errors.map(err => err.stack);
+            let newError = new BadRequestError(listOfErrors);
+            return next(newError);
+        }
 
         const creator_user_id = req.user.id;
         // confirm data validation with json schema

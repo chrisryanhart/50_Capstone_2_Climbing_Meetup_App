@@ -77,8 +77,14 @@ class ClimbMeetupApi {
   }
 
   static async login(loginData){
-    let res = await this.request(`login`,loginData,'post');
-    return res;
+    try{
+      let res = await this.request(`login`,loginData,'post');
+      return res;
+    }catch(err){
+      console.log('Heres my error:',err);
+      throw err;
+    }
+
   }
   static async registerUser(registrationData){
     try{
@@ -89,15 +95,19 @@ class ClimbMeetupApi {
       console.log(err);
       let myError = err.response;
       console.log('Heres my error:',err);
-      // return err.response;
       throw err;
     }
 
   }
   static async createMeetup(meetupData,formattedDateTime){
-    meetupData['date_time_utc']=formattedDateTime;
-    let res = await this.request('meetups/new',meetupData,'post');
-    return res;
+    try{
+      meetupData['date_time_utc']=formattedDateTime;
+      let res = await this.request('meetups/new',meetupData,'post');
+      return res;
+    }catch(err){
+      console.log('Heres my error:',err);
+      return err;
+    }
 
   }
 

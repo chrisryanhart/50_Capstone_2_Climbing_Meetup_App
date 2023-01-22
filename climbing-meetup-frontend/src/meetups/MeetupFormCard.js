@@ -39,10 +39,12 @@ export default function MeetupFormCard() {
     time:'',
     date_time_utc:'',
     duration: null,
-    location_id: null,
+    location_id: 166,
     description:''
   };
 
+  const [hasError, sethasError] = useState(false);
+  const [errorMessage,setErrorMessage] = useState('');
   const [meetupFormData,setMeetupFormData] = useState(INITIAL_STATE);
 
   if(!token) return <Redirect to='/'/>;
@@ -51,17 +53,36 @@ export default function MeetupFormCard() {
     e.preventDefault();
     // convert date time to correct format
     const {date, time} = meetupFormData;
+    if(date === ''){
+      sethasError(true);
+      setErrorMessage('Meetup date is required');
+      return;
+    }
+    if(time === ''){
+      sethasError(true);
+      setErrorMessage('Meetup time is required');
+      return;
+    }
 
-    const dateTime = date + 'T' + time;
+    let dateTime = '';
+    if (date !== '' && time !== ''){
+      dateTime = date + 'T' + time;
+    }
+
 
     // value to send to database
     // value is converted to utc when submitted to database
     // const localDateTimeStr = new Date(dateTime);
     
     let res = await ClimbMeetupApi.createMeetup(meetupFormData,dateTime);
-    setMeetupFormData(INITIAL_STATE);
 
-    history.push(`/users/${currUserId}/meetups`);
+    if(typeof(res.error)==='undefined'){
+      setMeetupFormData(INITIAL_STATE);
+      history.push(`/users/${currUserId}/meetups`);
+    }else{
+      sethasError(true);
+      setErrorMessage(res.error.message);
+    }
     
   }
 
@@ -79,28 +100,28 @@ export default function MeetupFormCard() {
           New Meetup Form
         </Typography>
 
-        <Typography variant="h5" component="h2">
-          Error: 
-        </Typography>
+        {hasError && <Typography style={{backgroundColor:'red'}}  variant="h6" component="h2">
+            <p style={{color:'white'}}><b>Error: {errorMessage}</b></p>
+        </Typography>}
 
         <Typography variant="body2" component="div">
             <form>
                 <div>
                     <label htmlFor='date'>Date: </label>
-                    <input onChange={handleChange} name='date' value={meetupFormData.date} type="date"/>  
+                    <input minLength="1" onChange={handleChange} name='date' value={meetupFormData.date} type="date"/>  
                 </div>
                 <div>
                     <label htmlFor='time'>Time: </label>
-                    <input onChange={handleChange} name='time' value={meetupFormData.time} type="time" step="900"/>  
+                    <input minLength="1" onChange={handleChange} name='time' value={meetupFormData.time} type="time" step="900"/>  
                 </div>
                 <div>
                     <label htmlFor='duration'>Duration: </label>
                     <input onChange={handleChange} name='duration' value={meetupFormData.duration} type="number"/>  
                 </div>
-                <div>
+                {/* <div>
                     <label htmlFor='location'>Location: </label>
                     <input onChange={handleChange} name='location_id' value={meetupFormData.location} type="number"/>  
-                </div>
+                </div> */}
                 <div>
                     <label htmlFor='description'>Description: </label>
                     <textarea onChange={handleChange} name='description' value={meetupFormData.description}></textarea>  

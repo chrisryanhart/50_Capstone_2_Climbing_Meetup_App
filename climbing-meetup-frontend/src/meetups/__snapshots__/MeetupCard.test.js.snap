@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiPaper-root MuiCard-root makeStyles-root-1 MuiPaper-elevation1 MuiPaper-rounded"
+    style="margin-top: 10px;"
+  >
+    <div
+      class="MuiCardContent-root"
+    >
+      <h2
+        class="MuiTypography-root MuiTypography-h5"
+      >
+        Climb at Red River Gorge
+      </h2>
+      <h6
+        class="MuiTypography-root MuiTypography-h6"
+        style="margin-left: 5px;"
+      >
+        <i>
+          Date: 1/5/2023
+        </i>
+        <br />
+      </h6>
+      <h6
+        class="MuiTypography-root MuiTypography-h6"
+        style="margin-left: 5px;"
+      >
+        <i>
+          Time: 10:00:00
+        </i>
+        <br />
+      </h6>
+      <h6
+        class="MuiTypography-root MuiTypography-h6"
+        style="margin-left: 5px;"
+      >
+        <i>
+          Type: Lead Climbing
+        </i>
+        <br />
+      </h6>
+      <h6
+        class="MuiTypography-root MuiTypography-h6"
+        style="margin-left: 5px;"
+      >
+        <i>
+          Description: Climb and have some beers
+        </i>
+      </h6>
+      <p
+        class="MuiTypography-root makeStyles-title-3 MuiTypography-body1 MuiTypography-gutterBottom"
+      >
+        <b>
+          Organized by: 
+        </b>
+      </p>
+      <div>
+        <a
+          href="/users/1"
+        >
+          <div
+            style="display: flex;"
+          >
+            <div
+              class="MuiAvatar-root MuiAvatar-circular"
+            >
+              <img
+                alt="Spider Monkey"
+                class="MuiAvatar-img"
+                src="https://firebasestorage.googleapis.com/v0/b/climbing-meetup-app.appspot.com/o/sean-benesh-VnmbcgAfL3Q-unsplash.jpg?alt=media&token=9f5685b0-3529-40c3-98d2-5b54b1b09825"
+              />
+            </div>
+            <p
+              class="MuiTypography-root MuiTypography-body2"
+              data-testid="creator-name"
+              style="margin-left: 10px; margin-top: 10px; align-items: center;"
+            >
+              spider man
+            </p>
+          </div>
+        </a>
+      </div>
+      <p
+        class="MuiTypography-root makeStyles-title-3 MuiTypography-body1 MuiTypography-gutterBottom"
+      >
+        <b>
+          Attendees: 
+        </b>
+      </p>
+      <div>
+        <a
+          href="/users/3"
+        >
+          <div
+            style="display: flex;"
+          >
+            <div
+              class="MuiAvatar-root MuiAvatar-circular"
+            >
+              <img
+                alt="Spider Monkey"
+                class="MuiAvatar-img"
+                src="https://firebasestorage.googleapis.com/v0/b/climbing-meetup-app.appspot.com/o/sean-benesh-VnmbcgAfL3Q-unsplash.jpg?alt=media&token=9f5685b0-3529-40c3-98d2-5b54b1b09825"
+              />
+            </div>
+            <p
+              class="MuiTypography-root MuiTypography-body2"
+              data-testid="attendee"
+              style="margin-left: 10px; margin-top: 10px; align-items: center;"
+            >
+              batman
+              <br />
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div
+      class="MuiCardActions-root MuiCardActions-spacing"
+    >
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textSizeSmall MuiButton-sizeSmall"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          class="MuiButton-label"
+        >
+          <a
+            href="/meetups/1/manage"
+          >
+            Manage
+          </a>
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

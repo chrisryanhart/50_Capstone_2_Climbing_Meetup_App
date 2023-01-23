@@ -57,13 +57,13 @@ export default function MeetupCard({details}) {
     if(attendee.status==='approved'){
       return (
       <div >
-        <Link to={`users/${attendee.id}`}>
+        <Link to={`/users/${attendee.id}`}>
             <div style={{display: 'flex'}}>
               <Avatar 
                       alt="Spider Monkey" 
                       src="https://firebasestorage.googleapis.com/v0/b/climbing-meetup-app.appspot.com/o/sean-benesh-VnmbcgAfL3Q-unsplash.jpg?alt=media&token=9f5685b0-3529-40c3-98d2-5b54b1b09825"
                       />
-              <Typography variant="body2" style={{marginLeft: '10px',marginTop: '10px',alignItems: 'center'}}>
+              <Typography data-testid="attendee" variant="body2" style={{marginLeft: '10px',marginTop: '10px',alignItems: 'center'}}>
                   {attendee.name}
                   <br/>
               </Typography>
@@ -150,7 +150,7 @@ export default function MeetupCard({details}) {
                           alt="Spider Monkey" 
                           src="https://firebasestorage.googleapis.com/v0/b/climbing-meetup-app.appspot.com/o/sean-benesh-VnmbcgAfL3Q-unsplash.jpg?alt=media&token=9f5685b0-3529-40c3-98d2-5b54b1b09825"
                           />
-                  <Typography variant="body2" style={{marginLeft: '10px',marginTop: '10px',alignItems: 'center'}}>
+                  <Typography data-testid="creator-name" variant="body2" style={{marginLeft: '10px',marginTop: '10px',alignItems: 'center'}}>
                     {details.creator_name}
                   </Typography>
               </div>

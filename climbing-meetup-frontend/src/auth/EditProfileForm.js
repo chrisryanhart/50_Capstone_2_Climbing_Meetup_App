@@ -1,4 +1,4 @@
-import React, {useState,useContext} from 'react';
+import React, {useState,useContext, useEffect} from 'react';
 import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -37,21 +37,47 @@ export default function ProfileFormCard() {
 
     const history = useHistory();
 
+    // pull from user profile
+    // const INITIAL_STATE = {
+    //     username:'testuser5',
+    //     password:'test',
+    //     name:'spongebob',
+    //     profile_image:'imagePlaceholder',
+    //     user_age: 44,
+    //     user_gender:'',
+    //     is_parent: false,
+    //     location_id: 466,
+    //     bio:'I like big jugs'
+    // }
     const INITIAL_STATE = {
-        username:'testuser5',
-        password:'test',
-        name:'spongebob',
-        profile_image:'imagePlaceholder',
-        user_age: 44,
+        name:'',
+        user_age: null,
         user_gender:'',
-        is_parent: false,
-        location_id: 466,
-        bio:'I like big jugs'
+        is_parent: null,
+        bio: ''
     }
 
     const [hasError, sethasError] = useState(false);
     const [errorMessage,setErrorMessage] = useState('');
-    const [newProfileFormData, setNewProfileFormData] = useState(INITIAL_STATE);
+    const [editProfileFormData, setEditProfileFormData] = useState(INITIAL_STATE);
+
+    useEffect(function getUserProfile(){
+        async function retrieveProfile(){
+            let res = await ClimbMeetupApi.getUser(id);
+
+            setEditProfileFormData(data => (
+                {
+                ...data,
+                name: res.name,
+                user_age: res.user_age,
+                user_gender: res.user_gender,
+                is_parent: res.is_parent,
+                bio: res.bio
+                }
+            ));
+        }
+        retrieveProfile(); 
+    },[]);
 
     if(Number(currUserId) !== Number(id)){
         alert('Unauthorized: Acces denied!');
@@ -63,41 +89,41 @@ export default function ProfileFormCard() {
         const value = e.target.checked;
         const name = e.target.name;
 
-        setNewProfileFormData(data => ({...data,[name]:value}));
+        setEditProfileFormData(data => ({...data,[name]:value}));
 
     }
 
     const handleGenderChange = (e) => {
         const {value} = e.target;
 
-        setNewProfileFormData(data => ({...data, 'user_gender': value}));
+        setEditProfileFormData(data => ({...data, 'user_gender': value}));
     }
 
 
     const handleChange = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
         const {value, name} = e.target;
 
-        setNewProfileFormData(data => ({...data, [name]: value}));
+        setEditProfileFormData(data => ({...data, [name]: value}));
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(newProfileFormData.user_age === ''){
+        if(editProfileFormData.user_age === ''){
         sethasError(true);
         setErrorMessage('Age input required');
         return;
         }
-        let res = await registerUser(newProfileFormData);
+        let res = await ClimbMeetupApi.updateUser(id,editProfileFormData);
 
         // if type error key doesn't exist, registration was successful
         if(typeof(res.error)==='undefined'){
-        setNewProfileFormData(INITIAL_STATE);
-        history.push(`/users/${res}`);
+            setEditProfileFormData(INITIAL_STATE);
+            history.push(`/users/${res}`);
         }else{
-        // if error exists
-        sethasError(true);
-        setErrorMessage(res.error.message);
+            // if error exists
+            sethasError(true);
+            setErrorMessage(res.error.message);
         }
     }
 
@@ -112,6 +138,15 @@ export default function ProfileFormCard() {
         }
     }
 
+    // let isMale;
+    // let isFemale;
+    // let isNonBinary;
+    // let unDeclared;
+
+    // if(editProfileFormData.user_gender === 'male'){
+    //     isMale = true;
+    // } 
+
     return (
         <Card className={classes.root}>
         <CardContent>
@@ -125,39 +160,39 @@ export default function ProfileFormCard() {
 
             <Typography variant="body2" component="div">
                 <form>
-                    <div>
+                    {/* <div>
                         <label htmlFor='username'>Username: </label>
-                        <input onChange={handleChange} name='username' value={newProfileFormData.username}/>
-                    </div>
-                    <div>
+                        <input onChange={handleChange} name='username' value={editProfileFormData.username}/>
+                    </div> */}
+                    {/* <div>
                         <label htmlFor='password'>Password: </label>
-                        <input type="password" onChange={handleChange} name='password' value={newProfileFormData.password}/>  
-                    </div>
+                        <input type="password" onChange={handleChange} name='password' value={editProfileFormData.password}/>  
+                    </div> */}
                     <div>
                         <label htmlFor='name'>Name: </label>
-                        <input onChange={handleChange} name='name' value={newProfileFormData.name}/>  
+                        <input onChange={handleChange} name='name' value={editProfileFormData.name}/>  
                     </div>
 
                         <label htmlFor='user_age'>Age: </label>
-                        <input type="number" onChange={handleChange} name='user_age' value={newProfileFormData.user_age}/>  
+                        <input type="number" onChange={handleChange} name='user_age' value={editProfileFormData.user_age}/>  
                     <div> 
                         <label htmlFor='is_parent'>Parent: </label>
-                        <input type="checkbox" checked={newProfileFormData.is_parent} id='is_parent' onChange={handleCheckboxChange} name='is_parent' />  
+                        <input type="checkbox" checked={editProfileFormData.is_parent} id='is_parent' onChange={handleCheckboxChange} name='is_parent' />  
 
                     </div>
                     <div>
                         <label>Gender: </label>
-                        <input type="radio" onChange={handleGenderChange} name='user_gender' value="male"/>  
+                        <input checked={editProfileFormData.user_gender==='Male'} type="radio" onChange={handleGenderChange} name='user_gender' value="Male"/>  
                         <label className='radio' htmlFor='user_gender'>Male </label>
-                        <input type="radio" onChange={handleGenderChange} name='user_gender' value="female"/>  
+                        <input checked={editProfileFormData.user_gender==='Female'} type="radio" onChange={handleGenderChange} name='user_gender' value="Female"/>  
                         <label className='radio' htmlFor='user_gender'>Female </label>
-                        <input type="radio" onChange={handleGenderChange} name='user_gender' value="nonbinary"/>  
+                        <input checked={editProfileFormData.user_gender==='Non-Binary'} type="radio" onChange={handleGenderChange} name='user_gender' value="Non-Binary"/>  
                         <label className='radio' htmlFor='user_gender'>Non-Binary </label>  
                     </div>
 
                     <div>
                         <label htmlFor='bio'>Bio: </label>
-                        <textarea onChange={handleChange} name='bio' value={newProfileFormData.bio}></textarea>  
+                        <textarea onChange={handleChange} name='bio' value={editProfileFormData.bio}></textarea>  
                     </div>
                     <Button type='submit' onClick={handleSubmit} variant='contained'>Update</Button>
                     <Button style={{marginLeft:'10px', backgroundColor:'red'}} type='submit' onClick={handleDelete} variant='contained'><b>Delete Profile</b></Button>

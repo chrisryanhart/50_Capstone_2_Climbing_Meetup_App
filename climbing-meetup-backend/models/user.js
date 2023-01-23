@@ -187,43 +187,28 @@ class User{
 
 
     static async updateUser(id, criteria){
-        const { username, 
-            password, 
-            name, 
-            profile_image, 
-            user_age, 
-            user_gender, 
-            is_parent,
-            has_dogs,
-            bio,
-            location_id,
-            preferences} = criteria;
+        const {  
+                name, 
+                user_age, 
+                user_gender, 
+                is_parent,
+                bio
+            } = criteria;
      
     
         const result = await db.query(
-            `UPDATE users SET username=$1, password=$2,
-                name=$3,
-                profile_image=$4,
-                user_age=$5,
-                user_gender=$6,
-                is_parent=$7,
-                has_dogs=$8,
-                bio=$9,
-                location_id=$10,
-                preferences=$11
-            WHERE id=$12
-            RETURNING username`,
-            [username,
-                password,
-                name,
-                profile_image,
+            `UPDATE users SET name=$1,
+                user_age=$2,
+                user_gender=$3,
+                is_parent=$4,
+                bio=$5
+            WHERE id=$6
+            RETURNING id`,
+            [   name,
                 user_age,
                 user_gender,
                 is_parent,
-                has_dogs,
                 bio,
-                location_id,
-                preferences,
                 id]);
 
         // this should never execute due to the initial if state in the route function

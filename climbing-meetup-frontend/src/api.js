@@ -131,6 +131,15 @@ class ClimbMeetupApi {
       return err;
     }
   }
+
+  static async updateUser(id, updateData){
+    try{
+      let res = await this.request(`users/${id}/edit`,updateData,'patch');
+      return res;
+    }catch(err){
+      return err;
+    }
+  }
 }
 
 

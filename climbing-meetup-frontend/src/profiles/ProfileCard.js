@@ -103,13 +103,16 @@ export default function ProfileCard() {
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
           {/* add actual location instead of id */}
-          <b>Location:</b> {userProfile.location_name}
+          <b>Location:</b> LEF Climbing
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
           <b>Age:</b> {userProfile.user_age}
         </Typography>
         {userProfile.user_gender && <Typography variant="body2" color="textSecondary" component="p">
           <b>Gender:</b> {userProfile.user_gender}
+        </Typography>}
+        {userProfile.is_parent && <Typography variant="body2" color="textSecondary" component="p">
+          <b>Climbing Parent:</b> Yes
         </Typography>}
         {/* <Typography variant="body2" color="textSecondary" component="p">
           <b>Belay Experience:</b> High

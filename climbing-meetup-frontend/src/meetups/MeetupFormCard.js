@@ -108,23 +108,23 @@ export default function MeetupFormCard() {
             <form>
                 <div>
                     <label htmlFor='date'>Date: </label>
-                    <input minLength="1" onChange={handleChange} name='date' value={meetupFormData.date} type="date"/>  
+                    <input aria-labelledby="date" minLength="1" onChange={handleChange} name='date' value={meetupFormData.date} type="date"/>  
                 </div>
                 <div>
                     <label htmlFor='time'>Time: </label>
-                    <input minLength="1" onChange={handleChange} name='time' value={meetupFormData.time} type="time" step="900"/>  
+                    <input aria-labelledby="time" minLength="1" onChange={handleChange} name='time' value={meetupFormData.time} type="time" step="900"/>  
                 </div>
                 <div>
-                    <label htmlFor='duration'>Duration: </label>
-                    <input onChange={handleChange} name='duration' value={meetupFormData.duration} type="number"/>  
+                    <label for="duration" htmlFor='duration'>Duration: </label>
+                    <input aria-labelledby="duration" onChange={handleChange} name='duration' value={meetupFormData.duration} type="number"/>  
                 </div>
                 {/* <div>
                     <label htmlFor='location'>Location: </label>
                     <input onChange={handleChange} name='location_id' value={meetupFormData.location} type="number"/>  
                 </div> */}
                 <div>
-                    <label htmlFor='description'>Description: </label>
-                    <textarea onChange={handleChange} name='description' value={meetupFormData.description}></textarea>  
+                    <label for="description" htmlFor='description'>Description: </label>
+                    <textarea aria-labelledby="description" onChange={handleChange} name='description' value={meetupFormData.description}></textarea>  
                 </div>
                 <Button variant='contained' onClick={handleSubmit}>Submit</Button>
             </form>

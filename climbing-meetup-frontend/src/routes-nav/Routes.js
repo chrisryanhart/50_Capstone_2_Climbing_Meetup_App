@@ -8,6 +8,7 @@ import ProfileCard from '../profiles/ProfileCard';
 import MeetupList from "../meetups/MeetupList";
 import ManageMeetupCard from "../meetups/ManageMeetupCard";
 import PastFutureMeetupsTab from "../meetups/PastFutureMeetupTab";
+import EditProfileForm from '../auth/EditProfileForm';
 
 
 function Routes(){
@@ -49,7 +50,7 @@ function Routes(){
                     {/* <MeetupList type='userMeetups'/> */}
                 </Route>
                 <Route exact path="/users/:id/edit">
-
+                    <EditProfileForm/>
                 </Route>
                 <Route exact path="/users/:id">
                     <ProfileCard/>

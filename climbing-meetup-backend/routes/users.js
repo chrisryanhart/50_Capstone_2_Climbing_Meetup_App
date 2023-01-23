@@ -10,6 +10,20 @@ const editProfileFormSchema = require('../schemas/editProfileFormSchema.json');
 
 const router = new express.Router();
 
+
+router.delete('/:id/delete', ensureLoggedIn, async function(req,res,next){
+    try{
+        let id =req.params.id;
+
+        let result = await User.deleteUser(id);
+
+        return res.json("Deleted user");
+    }catch(err){
+        return next(err);
+    }
+});
+
+
 // return list of all users
 // may need to filter by criteria
 router.get('/',ensureLoggedIn, async function(req,res,next){
@@ -74,5 +88,7 @@ router.patch('/:id',ensureLoggedIn,async function (req,res,next){
     }
 
 });
+
+
 
 module.exports = router;

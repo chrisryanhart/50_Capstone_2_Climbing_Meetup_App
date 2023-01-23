@@ -233,7 +233,16 @@ class User{
 
     }
 
-
+    static async deleteUser(id){
+        const result = await db.query(
+            `DELETE 
+            from users
+            WHERE id=$1
+            RETURNING id`, [id]);
+        
+        if(result.rows.length === 0) throw BadRequestError('User does not exist!');
+         
+    }
 
 }
 

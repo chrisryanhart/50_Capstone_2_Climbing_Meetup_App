@@ -46,6 +46,8 @@ export default function MeetupCard({details}) {
 
   const attendeeStatus = {status: ''};
 
+  const approvedAttendeeCount = [];
+
   const attendees = attendeeList.map(attendee =>{
 
     if(!isCreator){
@@ -55,6 +57,7 @@ export default function MeetupCard({details}) {
     }
 
     if(attendee.status==='approved'){
+      approvedAttendeeCount.push('approved');
       return (
       <div >
         <Link to={`/users/${attendee.id}`}>
@@ -72,7 +75,17 @@ export default function MeetupCard({details}) {
 
       </div>);
       }
-});
+  });
+
+  // let approvedAttendees;
+
+  // if(attendees.length !== 0){
+  //     const filteredAttendees = attendees.filter(attendee => {
+  //     return (attendee);
+  //   });
+  //   approvedAttendees = [...filteredAttendees];
+  // }
+
 
 
   // set initial meetupJoinStatus after checking is user is in the attendee list
@@ -100,7 +113,7 @@ export default function MeetupCard({details}) {
   if(meetupJoinStatus===''){
     joinStatusButton = <Button onClick={handleJoin} size="small">Join Meetup</Button>;
   }
-  if(meetupJoinStatus==='pending'){
+  if(meetupJoinStatus==='pending' || meetupJoinStatus==='rejected'){
     joinStatusButton = <Button size="small">Pending</Button>;
   }else if(meetupJoinStatus==='approved'){
     joinStatusButton = <Button onClick={leaveMeetup} size="small">Leave Meetup</Button>;
@@ -116,6 +129,8 @@ export default function MeetupCard({details}) {
   // const rawDate = new Date(details.utc_date_time);
   // const date = rawDate.toLocaleDateString('en-US');
   // const time = rawDate.toLocaleTimeString('en-US')
+
+  const hasApprovedAttendees = approvedAttendeeCount.length === 0 ? false:true;
 
   return (
     <Card className={classes.root} style={{ marginTop: '10px'}}>
@@ -156,9 +171,9 @@ export default function MeetupCard({details}) {
               </div>
             </Link>
         </div>
-        <Typography className={classes.title} gutterBottom>
+        {hasApprovedAttendees && <Typography className={classes.title} gutterBottom>
           <b>Attendees: </b>
-        </Typography>
+        </Typography>}
         {attendees}
       </CardContent>
       <CardActions>

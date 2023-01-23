@@ -78,7 +78,7 @@ export default function LoginFormCard() {
                 </div>
                 <div>
                     <label for='password'>Password: </label>
-                    <input onChange={handleUpdate} name='password' value={loginFormData.password}/>
+                    <input type="password" onChange={handleUpdate} name='password' value={loginFormData.password}/>
                 </div>
                 <Button onClick={handleSubmit} variant='contained'>Submit</Button>
             </form>

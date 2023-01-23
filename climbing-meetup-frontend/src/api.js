@@ -122,6 +122,15 @@ class ClimbMeetupApi {
     let res = await this.request(`meetups/${id}/manage`,attendeeDetails,'patch');
     return res;
   }
+
+  static async deleteUser(id){
+    try{
+      let res = await this.request(`users/${id}/delete`,{},'delete');
+      return res;
+    }catch(err){
+      return err;
+    }
+  }
 }
 
 

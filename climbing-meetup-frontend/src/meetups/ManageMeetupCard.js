@@ -156,17 +156,22 @@ export default function ManageMeetupCard() {
     })
   }
 
+  // if no pending attendees, don't show
+
+  let attendeesPending = pendingArr.length === 0 ? false:true;
+  let attendeesConfirmed = confirmedArr.length === 0 ? false:true;
+
 
   return (
     <Card className={classes.root} style={{ marginTop: '10px'}}>
       <CardContent>
-        <Typography className={classes.title} gutterBottom>
+        {attendeesPending && <Typography className={classes.title} gutterBottom>
           <b>Pending Attendees: </b>
-        </Typography>
+        </Typography>}
           {pendingArr}
-        <Typography className={classes.title} gutterBottom>
+        {attendeesConfirmed && <Typography className={classes.title} gutterBottom>
           <b>Confirmed Attendees: </b>
-        </Typography>
+        </Typography>}
           {confirmedArr}
       </CardContent>
       <CardActions>

@@ -112,7 +112,7 @@ export default function ProfileFormCard() {
                 </div>
                 <div>
                     <label htmlFor='password'>Password: </label>
-                    <input onChange={handleChange} name='password' value={newProfileFormData.password}/>  
+                    <input type="password" onChange={handleChange} name='password' value={newProfileFormData.password}/>  
                 </div>
                 <div>
                     <label htmlFor='name'>Name: </label>

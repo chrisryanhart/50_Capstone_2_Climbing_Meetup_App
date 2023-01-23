@@ -92,6 +92,9 @@ export default function MeetupFormCard() {
     setMeetupFormData(data => ({...data, [name]: value}));
   }
 
+  const dateObj = new Date();
+
+  const currentDateString = dateObj.toISOString().split('T')[0]
 
   return (
     <Card className={classes.root}>
@@ -108,7 +111,7 @@ export default function MeetupFormCard() {
             <form>
                 <div>
                     <label htmlFor='date'>Date: </label>
-                    <input aria-labelledby="date" minLength="1" onChange={handleChange} name='date' value={meetupFormData.date} type="date"/>  
+                    <input type="date" min={currentDateString} aria-labelledby="date" minLength="1" onChange={handleChange} name='date' value={meetupFormData.date} type="date"/>  
                 </div>
                 <div>
                     <label htmlFor='time'>Time: </label>

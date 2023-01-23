@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { Link, useParams, Redirect } from 'react-router-dom';
+import { Link, useParams, Redirect, useHistory } from 'react-router-dom';
 import ClimbMeetupApi from '../api';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -18,6 +18,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CountContext from "../UserContext";
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +47,7 @@ export default function ProfileCard() {
 
   const { currUserId, token } = useContext(CountContext);
 
+  const history = useHistory();
 
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -78,6 +80,11 @@ export default function ProfileCard() {
   if(!token) return <Redirect to='/'/>;
   if(hasError) return <Redirect to="/meetups" />; 
 
+  const showEditForm = () => {
+    history.push(`/users/${id}/edit`);
+  }
+
+  const isCurrentUserProfile = Number(currUserId) === Number(id) ? true:false;
 
   return (
     <Card className={classes.root} style={{margin: 'auto' }}>
@@ -110,6 +117,7 @@ export default function ProfileCard() {
         <Typography variant="body2" component="p">
           <Link to={`/users/${id}/meetups`}><b>See My Meetups</b></Link>
         </Typography>
+        {isCurrentUserProfile && <Button onClick={showEditForm} style={{marginTop:'5px'}}  variant='contained'>Edit Profile</Button>}
       </CardContent>
     </Card>
   ); 

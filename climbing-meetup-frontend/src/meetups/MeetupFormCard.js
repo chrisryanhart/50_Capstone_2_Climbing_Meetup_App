@@ -39,7 +39,7 @@ export default function MeetupFormCard() {
     time:'',
     date_time_utc:'',
     duration: null,
-    location_id: 166,
+    location_id: 466,
     description:''
   };
 

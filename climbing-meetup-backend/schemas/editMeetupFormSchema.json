@@ -16,10 +16,6 @@
         "minimum": 1,
         "maximum": 12
       },
-      "location_id": {
-        "type": "integer",
-        "minimum": 1
-      },
       "description": {
         "type": "string",
         "minLength": 10,
@@ -31,7 +27,6 @@
       "date",
       "time",
       "duration",
-      "location_id",
       "description"
     ]
   }

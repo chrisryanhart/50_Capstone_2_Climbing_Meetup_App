@@ -111,12 +111,12 @@ export default function MeetupCard({details}) {
   let joinStatusButton;
 
   if(meetupJoinStatus===''){
-    joinStatusButton = <Button onClick={handleJoin} size="small">Join Meetup</Button>;
+    joinStatusButton = <Button variant='contained'  onClick={handleJoin} size="small">Join Meetup</Button>;
   }
   if(meetupJoinStatus==='pending' || meetupJoinStatus==='rejected'){
-    joinStatusButton = <Button size="small">Pending</Button>;
+    joinStatusButton = <Button variant='contained' size="small">Pending</Button>;
   }else if(meetupJoinStatus==='approved'){
-    joinStatusButton = <Button onClick={leaveMeetup} size="small">Leave Meetup</Button>;
+    joinStatusButton = <Button variant='contained' onClick={leaveMeetup} size="small">Leave Meetup</Button>;
   }
 
   // modify date format
@@ -178,7 +178,9 @@ export default function MeetupCard({details}) {
       </CardContent>
       <CardActions>
         {!isCreator && joinStatusButton}
-        {isCreator && <Button size="small"><Link to={`/meetups/${details.id}/manage`}>Manage</Link></Button>}
+        {isCreator && <Button variant='contained' size="small"><Link to={`/meetups/${details.id}/manage`}>Manage Attendees</Link></Button>}
+        {isCreator && <Button variant='contained' size="small"><Link to={`/meetups/${details.id}/edit`}>Edit Meetup</Link></Button>}
+
       </CardActions>
 
     </Card>

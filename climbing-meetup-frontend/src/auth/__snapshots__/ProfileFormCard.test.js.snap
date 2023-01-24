@@ -25,7 +25,7 @@ exports[`detects snapshot changes 1`] = `
             </label>
             <input
               name="username"
-              value="testuser5"
+              value=""
             />
           </div>
           <div>
@@ -37,7 +37,7 @@ exports[`detects snapshot changes 1`] = `
             <input
               name="password"
               type="password"
-              value="test"
+              value=""
             />
           </div>
           <div>
@@ -48,7 +48,7 @@ exports[`detects snapshot changes 1`] = `
             </label>
             <input
               name="name"
-              value="spongebob"
+              value=""
             />
           </div>
           <label
@@ -59,7 +59,7 @@ exports[`detects snapshot changes 1`] = `
           <input
             name="user_age"
             type="number"
-            value="44"
+            value=""
           />
           <div>
             <label
@@ -119,9 +119,7 @@ exports[`detects snapshot changes 1`] = `
             </label>
             <textarea
               name="bio"
-            >
-              I like big jugs
-            </textarea>
+            />
           </div>
           <button
             class="MuiButtonBase-root MuiButton-root MuiButton-contained"

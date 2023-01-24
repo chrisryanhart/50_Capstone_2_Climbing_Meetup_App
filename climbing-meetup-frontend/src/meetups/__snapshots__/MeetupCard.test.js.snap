@@ -121,7 +121,7 @@ exports[`matches snapshot 1`] = `
       class="MuiCardActions-root MuiCardActions-spacing"
     >
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textSizeSmall MuiButton-sizeSmall"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
         tabindex="0"
         type="button"
       >
@@ -131,7 +131,25 @@ exports[`matches snapshot 1`] = `
           <a
             href="/meetups/1/manage"
           >
-            Manage
+            Manage Attendees
+          </a>
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </button>
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeSmall MuiButton-sizeSmall"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          class="MuiButton-label"
+        >
+          <a
+            href="/meetups/1/edit"
+          >
+            Edit Meetup
           </a>
         </span>
         <span

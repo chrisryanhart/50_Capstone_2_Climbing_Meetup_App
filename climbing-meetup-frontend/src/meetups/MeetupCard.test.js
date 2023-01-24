@@ -118,6 +118,6 @@ it("loads current user meetup details", function() {
 
     expect(getByTestId('attendee').textContent).toEqual('batman');
     expect(getByTestId('creator-name').textContent).toEqual('spider man'); 
-    expect(getByText('Manage')).toBeInTheDocument();
+    expect(getByText('Manage Attendees')).toBeInTheDocument();
 
 });

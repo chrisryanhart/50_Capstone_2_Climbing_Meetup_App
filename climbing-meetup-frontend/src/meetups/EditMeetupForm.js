@@ -118,6 +118,15 @@ export default function EditMeetupForm() {
 
     const currentDateString = dateObj.toISOString().split('T')[0]
 
+    const handleDelete = async () => {
+
+        let res = await ClimbMeetupApi.deleteMeetup(id);
+
+        if(res === 'Meetup deleted'){
+            history.push(`/users/${currUserId}/meetups`);
+        }
+    }
+
     return (
         <Card className={classes.root}>
         <CardContent>
@@ -151,7 +160,8 @@ export default function EditMeetupForm() {
                         <label htmlFor='description'>Description: </label>
                         <textarea aria-labelledby="description" onChange={handleChange} name='description' value={editMeetupFormData.description}></textarea>  
                     </div>
-                    <Button variant='contained' onClick={handleSubmit}>Submit</Button>
+                    <Button variant='contained' onClick={handleSubmit}>Edit Details</Button>
+                    <Button variant='contained' onClick={handleDelete}>Delete Meetup</Button>
                 </form>
             </Typography>
         </CardContent>

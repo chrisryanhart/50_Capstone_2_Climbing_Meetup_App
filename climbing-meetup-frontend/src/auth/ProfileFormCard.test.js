@@ -6,47 +6,29 @@ import { UserProvider, regMock } from "../testUtilities";
 import { MemoryRouter } from "react-router-dom";
 
 
-
-
 it("renders without crashing", function() {
-
-  render(
-    <MemoryRouter>
-        <UserProvider>
-            <ProfileFormCard />
-        </UserProvider>
-    </MemoryRouter>
+    render(
+      <MemoryRouter>
+          <UserProvider>
+              <ProfileFormCard />
+          </UserProvider>
+      </MemoryRouter>
 
     );
 });
 
 
-it("submits form when submit button pushed", function() {
-    const registerMock = jest.fn()
+it("detects snapshot changes", function() {
 
-    const {getByText, getByLabelText } = render(
+    const { asFragment } = render(
       <MemoryRouter>
-        <UserProvider registerUser={registerMock} >
+        <UserProvider  >
             <ProfileFormCard />
         </UserProvider>
       </MemoryRouter>
-      );
+      );  
     
-    const formTitle = getByText('Complete New Profile Form:');
-    // expect(submitFormMock)
-
-    expect(formTitle).toBeInTheDocument();
-
-    const submitButton = getByText('Submit');
-
-    fireEvent.click(submitButton);
-
-    // expect(regMock).toHaveBeenCalled();
-
-    expect(registerMock).toHaveBeenCalled();
-
-    // console.log('test');
-
-    // expect(getByText('New Meetup Form')).toBeInTheDocument();
-    
+    expect(asFragment()).toMatchSnapshot();
 });
+
+

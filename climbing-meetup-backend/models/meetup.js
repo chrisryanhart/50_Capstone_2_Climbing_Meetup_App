@@ -192,7 +192,6 @@ class Meetup{
             [id,creator_user_id]);
         
         if(result.rowCount === 0) throw new NotFoundError('Invalid input. No such meetup exists.');
-
     }
     static async joinMeetup(id,attendee_user_id){
 
@@ -239,7 +238,6 @@ class Meetup{
 
         return result.rows[0];
     }
-
 }
 
 module.exports = Meetup;

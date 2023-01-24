@@ -19,9 +19,6 @@
         "type": "string",
         "maxLength": 10
       },
-      "is_parent": {
-        "type": "boolean"
-      },
       "bio": {
         "type": "string"
       }

@@ -5,11 +5,10 @@
     "properties": {
       "date": {
         "type": "string",
-        "format": "date"
+        "minimum": 1
       },
       "time": {
-        "type": "string",
-        "pattern": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]\\s[AP][M]$"
+        "type": "string"
       },
       "duration": {
         "type": "number",
@@ -18,15 +17,16 @@
       },
       "description": {
         "type": "string",
-        "minLength": 10,
+        "minLength": 5,
         "maxLength": 100
       }
     },
-    "additionalProperties": false,
+    "additionalProperties": true,
     "required": [
       "date",
       "time",
       "duration",
+      "location_id",
       "description"
     ]
   }

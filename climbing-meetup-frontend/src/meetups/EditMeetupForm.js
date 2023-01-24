@@ -59,7 +59,6 @@ export default function EditMeetupForm() {
             setEditMeetupFormData(data => (
                 {
                 ...data,
-                id: res[0].id,
                 date: date,
                 time: res[0].time,
                 date_time_utc: res[0].date_time_utc,

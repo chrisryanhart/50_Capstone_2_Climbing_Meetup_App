@@ -34,15 +34,15 @@ export default function ProfileFormCard() {
   const history = useHistory();
 
   const INITIAL_STATE = {
-    username:'testuser5',
-    password:'test',
-    name:'spongebob',
-    profile_image:'imagePlaceholder',
-    user_age: 44,
-    user_gender:'',
+    username:'',
+    password:'',
+    name:'',
+    profile_image:'',
+    user_age: null,
+    user_gender: '',
     is_parent: false,
     location_id: 466,
-    bio:'I like big jugs'
+    bio:''
   }
 
   const [hasError, sethasError] = useState(false);

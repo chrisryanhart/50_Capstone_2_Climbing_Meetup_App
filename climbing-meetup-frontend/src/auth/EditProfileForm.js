@@ -138,14 +138,6 @@ export default function ProfileFormCard() {
         }
     }
 
-    // let isMale;
-    // let isFemale;
-    // let isNonBinary;
-    // let unDeclared;
-
-    // if(editProfileFormData.user_gender === 'male'){
-    //     isMale = true;
-    // } 
 
     return (
         <Card className={classes.root}>

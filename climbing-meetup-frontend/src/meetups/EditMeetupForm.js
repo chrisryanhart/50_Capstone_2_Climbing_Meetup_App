@@ -160,8 +160,8 @@ export default function EditMeetupForm() {
                         <label htmlFor='description'>Description: </label>
                         <textarea aria-labelledby="description" onChange={handleChange} name='description' value={editMeetupFormData.description}></textarea>  
                     </div>
-                    <Button variant='contained' onClick={handleSubmit}>Edit Details</Button>
-                    <Button variant='contained' onClick={handleDelete}>Delete Meetup</Button>
+                    <Button variant='contained' onClick={handleSubmit}>Update</Button>
+                    <Button style={{marginLeft:'10px', backgroundColor:'red'}} variant='contained' onClick={handleDelete}><b>Delete Meetup</b></Button>
                 </form>
             </Typography>
         </CardContent>

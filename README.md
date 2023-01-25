@@ -1,18 +1,18 @@
 # Climbing Meetup App
 
+**URL Link:** _https://climbing-meetup.surge.sh/
+
 **Overview:**
 
 The Climbing Meetup App helps climbers facilitate climbing sessions with other climbers.   Schedule coordination is key because a second climber has to belay the active climber.  As such, this app is tailored to climbers with busy, dynamic schedules and climbers new to the area find a climbing partner.  Users can search existing meetups and request to join.  If no desireable meetups are found, the user can create a new meetup and coordinate with attendees that request to join.  All user meetups, both past and future, can be monitored from their custom profile. 
 
-<!--Add picture of the climbing board-->
 
 
  - **Database Schema Model:**
  ![db schema model](database_schema.png?raw=true  "database_schema")
  - **Application Architecture:**
-  ![db schema model](App_Architecture.png?raw=true  "College Value App DB Schema")
+  ![app architecture](app_architecture.png?raw=true  "Climbing Meetup app architecture")
 
-**URL Link:** _https://climbing-meetup.surge.sh/_
 
 **Features Implemented:**
 
@@ -42,6 +42,17 @@ The Climbing Meetup App helps climbers facilitate climbing sessions with other c
 6. Meetup creator edit and delete capability
  * Users can edit or delete meetups they created
 
+ 
+**Step-by-step User guide:**
+
+1. Create new profile or login to existing profile.
+2. Review profile.  If desired, user can edit the profile.
+3. User can review all future and past events.
+4. If a user wants to find more events, the user can browse all future meetups.
+5. The user can request to join existing meetups.
+6. If no ideal times and/or partners are found, the user can create a new meetup
+7. When attendees request to join the user's new meetup, they can approve or decline join requests. 
+
 
 **Steps to Run Backend Tests**
 
@@ -58,11 +69,6 @@ The Climbing Meetup App helps climbers facilitate climbing sessions with other c
 1. Open a new terminal
 2. Change directory to the 'climbing-meetup-frontend' subdirectory
 3. Enter the command 'npm test'. Then select 'a' to run all tests.
-
-
-**Step-by-step User guide:**
-
-1. 
 
 
 **Technology Stack Used:**

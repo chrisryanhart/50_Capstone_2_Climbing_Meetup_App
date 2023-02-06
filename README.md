@@ -10,8 +10,7 @@ The Climbing Meetup App helps climbers facilitate climbing sessions with other c
 
  - **Database Schema Model:**
  ![db schema model](database_schema.png?raw=true  "database_schema")
- - **Application Architecture:**
-  ![app architecture](app_architecture.png?raw=true  "Climbing Meetup app architecture")
+
 
 
 **Features Implemented:**

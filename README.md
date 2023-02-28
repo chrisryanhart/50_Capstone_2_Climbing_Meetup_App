@@ -1,6 +1,6 @@
 # Climbing Meetup App
 
-**URL Link:** _https://climbing-meetup.surge.sh/
+**URL Link:** https://climbing-meetup.surge.sh/
 
 **Overview:**
 
@@ -11,7 +11,8 @@ The Climbing Meetup App helps climbers facilitate climbing sessions with other c
  - **Database Schema Model:**
  ![db schema model](database_schema.png?raw=true  "database_schema")
 
-
+ - **Application Architecture:**
+ ![db schema model](app_architecture.png?raw=true  "database_schema")
 
 **Features Implemented:**
 

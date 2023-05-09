@@ -125,6 +125,9 @@ export default function MeetupCard({details}) {
   const rawDateFormat = new Date(details.date);
   const dateStr = rawDateFormat.toLocaleDateString('en-US');
 
+  console.lot(`Heroku DB raw date output:${details.date}`);
+
+
   // use the following for utc_date_time conversions
   // const rawDate = new Date(details.utc_date_time);
   // const date = rawDate.toLocaleDateString('en-US');

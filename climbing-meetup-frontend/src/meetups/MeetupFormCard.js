@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CountContext from '../UserContext';
 import ClimbMeetupApi from '../api';
+import { DateTime } from "luxon";
 
 const useStyles = makeStyles({
   root: {
@@ -58,23 +59,26 @@ export default function MeetupFormCard() {
       setErrorMessage('Meetup date is required');
       return;
     }
-    if(time === ''){
+    if(time 
+      === ''){
       sethasError(true);
       setErrorMessage('Meetup time is required');
       return;
     }
 
-    let dateTime = '';
+    // create local date/time string
+    // format: "2023-05-10T00:00:000"
+    let localTimestamp= '';
     if (date !== '' && time !== ''){
-      dateTime = date + 'T' + time;
+      localTimestamp = date + 'T' + time + ':00';
     }
 
-
-    // value to send to database
-    // value is converted to utc when submitted to database
-    // const localDateTimeStr = new Date(dateTime);
+    // create event time in local event timezone (instead of the client timezone)
+    let localTimestampWithTimeZone = DateTime.fromISO(localTimestamp, { zone: "America/New_York" }).toString();
+    let timeStampValue = new Date(localTimestampWithTimeZone);
+    let utcTimestamp = timeStampValue.toISOString();
     
-    let res = await ClimbMeetupApi.createMeetup(meetupFormData,dateTime);
+    let res = await ClimbMeetupApi.createMeetup(meetupFormData,utcTimestamp);
 
     if(typeof(res.error)==='undefined'){
       setMeetupFormData(INITIAL_STATE);

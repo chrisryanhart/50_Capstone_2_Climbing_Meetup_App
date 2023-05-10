@@ -1,4 +1,4 @@
-\connect climbing_meetup_test
+\connect climbing_meetup_timezone_test;
 
 INSERT INTO states (name)
 VALUES ('Alabama'), ('Alaska'),('Arizona'),('Arkansas'),('California'),('Colorado'),('Connecticut'),('Delaware'),('Florida'),

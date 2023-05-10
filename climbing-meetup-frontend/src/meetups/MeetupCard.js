@@ -122,10 +122,11 @@ export default function MeetupCard({details}) {
   // modify date format
   // can get the utc_date_time from the database
 
-  const rawDateFormat = new Date(details.date);
-  const dateStr = rawDateFormat.toLocaleDateString('en-US');
+  // converts to local time on client
+  const rawDateFormat = new Date(details.utc_date_time);
+  const dateStr = rawDateFormat.toLocaleDateString('en-US',{timeZone:'America/New_York'});
 
-  console.lot(`Heroku DB raw date output:${details.date}`);
+  console.log(`Heroku DB raw date output:${details.utc_date_time}`);
 
 
   // use the following for utc_date_time conversions

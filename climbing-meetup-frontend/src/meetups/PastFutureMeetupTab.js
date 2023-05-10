@@ -99,6 +99,8 @@ export default function PastFutureMeetupsTab({type}) {
     let currentDateTime = Date.now();
     let meetingDateTime = Date.parse(meetup.date);
 
+    // can pull utc_date_time here
+
     if(currentDateTime < meetingDateTime){
       isPast = false;
       futureMeetups.push(<MeetupCard key={meetup.id} details={meetup} isPast={isPast}/>);

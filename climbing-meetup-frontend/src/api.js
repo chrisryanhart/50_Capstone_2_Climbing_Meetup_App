@@ -107,6 +107,10 @@ class ClimbMeetupApi {
   }
   static async createMeetup(meetupData,formattedDateTime){
     try{
+      // // convert date format
+      // let dateSuffix = 'T00:00:000Z';
+      // meetupData.date = meetupData.date + dateSuffix;
+
       meetupData['date_time_utc']=formattedDateTime;
       let res = await this.request('meetups/new',meetupData,'post');
       return res;
@@ -114,7 +118,6 @@ class ClimbMeetupApi {
       console.log('Heres my error:',err);
       return err;
     }
-
   }
 
   static async handleAttendee(id,attendeeDetails){

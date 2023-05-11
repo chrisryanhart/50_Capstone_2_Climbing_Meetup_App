@@ -129,11 +129,6 @@ export default function MeetupCard({details}) {
   console.log(`Heroku DB raw date output:${details.utc_date_time}`);
 
 
-  // use the following for utc_date_time conversions
-  // const rawDate = new Date(details.utc_date_time);
-  // const date = rawDate.toLocaleDateString('en-US');
-  // const time = rawDate.toLocaleTimeString('en-US')
-
   const hasApprovedAttendees = approvedAttendeeCount.length === 0 ? false:true;
 
   return (
@@ -147,7 +142,7 @@ export default function MeetupCard({details}) {
           <br/>
         </Typography>
         <Typography variant="h6" component="h6" style={{ marginLeft: '5px'}}>
-          <i>Time: {details.time}</i>
+          <i>Time: {details.time} ET</i>
           <br/>
         </Typography>
         <Typography variant="h6" component="h6" style={{ marginLeft: '5px'}}>

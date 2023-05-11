@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CountContext from '../UserContext';
 import ClimbMeetupApi from '../api';
+import { DateTime } from 'luxon';
 
 const useStyles = makeStyles({
   root: {
@@ -46,6 +47,7 @@ export default function EditMeetupForm() {
         description:''
     };
 
+
     const [hasError, sethasError] = useState(false);
     const [errorMessage,setErrorMessage] = useState('');
     const [editMeetupFormData,setEditMeetupFormData] = useState(INITIAL_STATE);
@@ -54,8 +56,11 @@ export default function EditMeetupForm() {
         async function retrieveDetails(){
             let res = await ClimbMeetupApi.getMeetupDetail(id);
 
-            const date = res[0].date.split('T')[0];
-            
+            // convert date to event timezone
+            const timeZoneOffset = DateTime.fromISO(res[0].date_time_utc, { zone: "America/New_York" });
+            const rawDateFormat = timeZoneOffset.toString();
+            const date = rawDateFormat.split('T')[0];
+         
             setEditMeetupFormData(data => (
                 {
                 ...data,
@@ -87,16 +92,19 @@ export default function EditMeetupForm() {
             return;
         }
 
-        let dateTime = '';
+        // create local date/time string
+        // format: "2023-05-10T00:00:000"
+        let localTimestamp= '';
         if (date !== '' && time !== ''){
-            dateTime = date + 'T' + time;
+        localTimestamp = date + 'T' + time;
         }
 
-        // value to send to database
-        // value is converted to utc when submitted to database
-        // const localDateTimeStr = new Date(dateTime);
+        let localTimestampWithTimeZone = DateTime.fromISO(localTimestamp, { zone: "America/New_York" }).toString();
+        let timeStampValue = new Date(localTimestampWithTimeZone);
+        let utcTimestamp = timeStampValue.toISOString();
     
-        let res = await ClimbMeetupApi.updateMeetup(id,editMeetupFormData);
+        // add the formatted date
+        let res = await ClimbMeetupApi.updateMeetup(id,editMeetupFormData,utcTimestamp);
 
         if(typeof(res.error)==='undefined'){
             setEditMeetupFormData(INITIAL_STATE);
@@ -114,9 +122,11 @@ export default function EditMeetupForm() {
         setEditMeetupFormData(data => ({...data, [name]: value}));
     }
 
-    const dateObj = new Date();
+    // Create minimum possible event date to control date input
+    const currDateTime = DateTime.now();
+    const eventTimeZone = currDateTime.setZone('America/New_York',{keepLocalTime:true});
+    const currentDateString = eventTimeZone.toString().split('T')[0];
 
-    const currentDateString = dateObj.toISOString().split('T')[0]
 
     const handleDelete = async () => {
 
@@ -146,7 +156,7 @@ export default function EditMeetupForm() {
                     </div>
                     <div>
                         <label htmlFor='time'>Time: </label>
-                        <input aria-labelledby="time" minLength="1" onChange={handleChange} name='time' value={editMeetupFormData.time} type="time" step="900"/>  
+                        <input aria-labelledby="time" minLength="1" onChange={handleChange} name='time' value={editMeetupFormData.time} type="time" step="900"/> ET  
                     </div>
                     <div>
                         <label htmlFor='duration'>Duration: </label>

@@ -168,19 +168,20 @@ class Meetup{
     }
 
     static async updateMeetup(id,creator_user_id,details){
-        const {date,time,duration,location_id,description} = details;
+        const {date,time,duration,date_time_utc,location_id,description} = details;
         const result = await db.query(
             `UPDATE meetups SET date=$1, 
                 time=$2,
                 duration=$3,
-                location_id=$4,
-                description=$5
-            WHERE id=$6 AND creator_user_id=$7
+                date_time_utc=$4,
+                location_id=$5,
+                description=$6
+            WHERE id=$7 AND creator_user_id=$8
             RETURNING id`,
-            [date,time,duration,location_id,description,id,creator_user_id]);
+            [date,time,duration,date_time_utc,location_id,description,id,creator_user_id]);
         
         if(result.rowCount === 0) throw new NotFoundError('Invalid input. No such meetup exists.');
-        
+
         return result.rows[0];
     }
     static async deleteMeetup(id,creator_user_id){

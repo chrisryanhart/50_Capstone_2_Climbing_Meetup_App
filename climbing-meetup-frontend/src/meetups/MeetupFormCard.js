@@ -96,9 +96,11 @@ export default function MeetupFormCard() {
     setMeetupFormData(data => ({...data, [name]: value}));
   }
 
-  const dateObj = new Date();
 
-  const currentDateString = dateObj.toISOString().split('T')[0]
+  // Create minimum possible event date to control date input
+  const currDateTime = DateTime.now();
+  const eventTimeZone = currDateTime.setZone('America/New_York',{keepLocalTime:true});
+  const currentDateString = eventTimeZone.toString().split('T')[0];
 
   return (
     <Card className={classes.root}>
@@ -119,7 +121,8 @@ export default function MeetupFormCard() {
                 </div>
                 <div>
                     <label htmlFor='time'>Time: </label>
-                    <input aria-labelledby="time" minLength="1" onChange={handleChange} name='time' value={meetupFormData.time} type="time" step="900"/>  
+                    <input aria-labelledby="time" minLength="1" onChange={handleChange} name='time' value={meetupFormData.time} type="time" step="900"/>  ET
+                    
                 </div>
                 <div>
                     <label for="duration" htmlFor='duration'>Duration: </label>

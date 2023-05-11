@@ -153,8 +153,11 @@ class ClimbMeetupApi {
     }
   }
   
-  static async updateMeetup(id, updateData){
+  static async updateMeetup(id, updateData, formattedDateTime){
     try{
+
+      // add the modified utc_date_time
+      updateData['date_time_utc']=formattedDateTime;
       let res = await this.request(`meetups/${id}/edit`,updateData,'patch');
       return res;
     }catch(err){
